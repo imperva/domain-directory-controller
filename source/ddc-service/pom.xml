@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>ddc</artifactId>
+        <groupId>com.imperva.opensource</groupId>
+        <version>5.1.0.0.0.0</version>
+    </parent>
+
+    <artifactId>ddc-service</artifactId>
+    <groupId>com.imperva.opensource.ddc</groupId>
+    <dependencies>
+        <dependency>
+            <groupId>com.imperva.opensource.ddc</groupId>
+            <artifactId>ddc-core</artifactId>
+        </dependency>
+    </dependencies>
+
+
+
+    <!--<build>-->
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<artifactId>maven-assembly-plugin</artifactId>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>install</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>single</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--<configuration>-->
+                    <!--&lt;!&ndash;<archive>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<manifest>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<mainClass>com.imperva.itp.logger.main.MainApp</mainClass>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</manifest>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</archive>&ndash;&gt;-->
+                    <!--<descriptorRefs>-->
+                        <!--<descriptorRef>jar-with-dependencies</descriptorRef>-->
+                    <!--</descriptorRefs>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+    <!--</build>-->
+
+</project>

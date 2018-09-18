@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>ddc</artifactId>
+    <packaging>pom</packaging>
+    <groupId>com.imperva.opensource</groupId>
+    <version>5.1.0.0.0.0</version>
+
+    <!-- Project modules. Compiled or Installed together  -->
+    <modules>
+        <module>ddc-core</module>
+        <module>ddc-service</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+                <dependency>
+                <artifactId>ddc-core</artifactId>
+                <groupId>com.imperva.opensource.ddc</groupId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.6</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+    <distributionManagement>
+        <repository>
+            <id>libs-release-local</id>
+            <url>https://il-mavenrep-lp1/libs-release-local</url>
+        </repository>
+        <snapshotRepository>
+            <id>libs-snapshot-local</id>
+            <url>https://il-mavenrep-lp1/libs-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
+	<build>
+		<plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<additionalparam>-Xdoclint:none</additionalparam>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
