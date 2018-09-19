@@ -24,6 +24,7 @@ Internally DDC makes use of apache directory ldap API and adds the following enh
 - Although DDC currently supports Microsoft Active Directory only, it was designed to be easily extended to fit any other Active Directory implementation 
 - Easy Paging API 
 - Querying multiple endpoints with a single query
+- Change Requests: Add, Remove, Replace AD's objects
 - Secured connection
 - Automatically retries in case of failure
 - Automatically resolve host to IP
@@ -36,17 +37,7 @@ Internally DDC makes use of apache directory ldap API and adds the following enh
     - Authentication 
     - Auto retry on Connection Failure
     - etc.
-
-<!--# DDC's Nightly Build Version
-4.0.0.1.0.3-SNAPSHOT-->
-
-# DDC's Latest Version
-4.1.0.0.0.0:
-- Improve Paging API
-- Fix Paging internal implementation to prevent "UNAVAILABLE_CRITICAL_EXTENSION" error
-- Decrease number of DDC modules (see below)
-- Dependency to spring core framework 4.2.2.RELEASE removed
-- Enable suppress SSL validations per EndPoint  
+ 
 
 # Dependencies
 Internally DDC makes use of a few libraries:
@@ -384,6 +375,30 @@ queryRequest.addSearchSentence(firstNameSentence);
 for (PartitionResponse partitionResponse : queryResponse.get()) {
     Status status = partitionResponse.getStatus().get("10.100.10.100");
     System.out.println("Exception: " + status.getError());
+}
+
+...
+```
+
+#### Use Case 8 - Change Requests: Add, Remove, Replace AD's objects 
+
+In order to change AD's object's fields a ChangeRequest object is needed.
+Using the ChangeRequest object you can specify the field and values you want to add, remove or replace.
+
+```java
+...
+
+//* Create a new Endpoint (see Use Case 1)
+
+ChangeRequest changeRequest = new ChangeRequest("<The Distinguished Name of the AD object to change>");
+changeRequest.add(FieldType.CITY, "<value>");//* Add new field with value
+changeRequest.remove(FieldType.EMAIL);//* Remove field
+changeRequest.replace(FieldType.COUNTRY, "<value>");//* Replace field's value
+
+changeRequest.setEndpoint(endpoint);
+
+try (Connector connector = new Connector(changeRequest)) {
+    connector.executeChangeRequest();
 }
 
 ...
