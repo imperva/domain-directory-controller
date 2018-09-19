@@ -4,16 +4,6 @@ DDC is an Active Directory Java SDK designed to simplify AD interaction for smal
 DDC is a portable Java library provided with a friendly API, allowing you to quickly compose simple or complicated 
 queries against AD's endpoints without any previous LDAP knowledge.
 
-# Getting Help
-If you have questions about the library, please be sure to check out the API documentation. 
-If you still have questions, reach out me via mail gabi.beyo@imperva.com.
-
-##### Reporting Bugs
-Please open a Git Issue and include as much information as possible. If possible, provide sample code that illustrates the problem you're seeing. 
-If you're seeing a bug only on a specific repository, please provide a link to it if possible.
-
-Please do not open a Git Issue for help, leave it only for bug reports.
-
 # Benefits
 The goal of this library is to enable an easy interaction with any LDAP Directory Server 
 by hiding all the related communication's issues and internal bits-and-bytes.
@@ -426,3 +416,14 @@ DDC enables setting a default authentication mode. The default mode is set to GS
 
 ##### Connection Timeout
 DDC enables setting a default timeout to DDC's queries. The default timeout value is set to 5000 seconds, in order to change this behaviour set the following flag connection.timeout=5000 to a different timeout value.
+
+
+# Getting Help
+If you have questions about the library, please be sure to check out the API documentation. 
+If you still have questions, reach out me via mail gabi.beyo@imperva.com.
+
+##### Reporting Bugs
+Please open a Git Issue and include as much information as possible. If possible, provide sample code that illustrates the problem you're seeing. 
+If you're seeing a bug only on a specific repository, please provide a link to it if possible.
+
+Please do not open a Git Issue for help, leave it only for bug reports.
