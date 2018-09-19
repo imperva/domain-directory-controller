@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.github.imperva</groupId>
+        <groupId>com.imperva.opensource</groupId>
         <artifactId>domain-directory-controller</artifactId>
         <version>6.0.0.0.0.0-SNAPSHOT</version>
     </parent>
@@ -12,7 +12,7 @@
     <version>6.0.0.0.0.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
-            <groupId>com.github.imperva</groupId>
+            <groupId>com.imperva.opensource</groupId>
             <artifactId>ddc-core</artifactId>
             <version>6.0.0.0.0.0-SNAPSHOT</version>
         </dependency>
