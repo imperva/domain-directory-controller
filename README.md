@@ -74,7 +74,7 @@ For your convenience, the project's binaries can be found in the 'bin' directory
 
 # How To Use It - First Steps
 In order to start playing with DDC you just need to import all DDC's projects and dependencies (see Dependencies section).
-DDC is a Maven project so you can import the projects manually or via Maven by adding the following Dependencies to your project's POM file:
+DDC is a Maven project (binaries are deployed in Maven Central) so you can import the projects manually or via Maven by adding the following Dependencies to your project's POM file:
 
 ~~~
 
@@ -82,13 +82,13 @@ DDC is a Maven project so you can import the projects manually or via Maven by a
         <dependency>
             <artifactId>ddc-core</artifactId>
             <groupId>com.imperva.opensource.ddc</groupId>
-            <version>4.0.0.0.0.0</version>
+            <version><VERSION></version>
         </dependency>
        <!--To work with ddc service wrapper add the following dependency-->
         <dependency>
             <artifactId>ddc-service</artifactId>
             <groupId>com.imperva.opensource.ddc</groupId>
-            <version>4.0.0.0.0.0</version>
+            <version><VERSION></version>
         </dependency>
     
 ~~~
