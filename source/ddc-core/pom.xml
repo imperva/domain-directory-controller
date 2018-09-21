@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.imperva.opensource</groupId>
+        <groupId>com.imperva</groupId>
         <artifactId>domain-directory-controller</artifactId>
         <version>6.0.0.0.0.0</version>
     </parent>

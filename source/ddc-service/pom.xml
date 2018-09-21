@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.imperva.opensource</groupId>
+        <groupId>com.imperva</groupId>
         <artifactId>domain-directory-controller</artifactId>
         <version>6.0.0.0.0.0</version>
     </parent>
@@ -11,7 +11,7 @@
     <artifactId>ddc-service</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.imperva.opensource</groupId>
+            <groupId>com.imperva</groupId>
             <artifactId>ddc-core</artifactId>
             <version>6.0.0.0.0.0</version>
         </dependency>
