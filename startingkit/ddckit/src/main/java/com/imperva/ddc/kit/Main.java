@@ -1,13 +1,13 @@
-package com.imperva.opensource.ddc.kit;
+package com.imperva.ddc.kit;
 
 
-import com.imperva.opensource.ddc.core.Connector;
-import com.imperva.opensource.ddc.core.language.PhraseOperator;
-import com.imperva.opensource.ddc.core.language.QueryAssembler;
-import com.imperva.opensource.ddc.core.language.Sentence;
-import com.imperva.opensource.ddc.core.language.SentenceOperator;
-import com.imperva.opensource.ddc.core.query.*;
-import com.imperva.opensource.ddc.service.DirectoryConnectorService;
+import com.imperva.ddc.core.Connector;
+import com.imperva.ddc.core.language.PhraseOperator;
+import com.imperva.ddc.core.language.QueryAssembler;
+import com.imperva.ddc.core.language.Sentence;
+import com.imperva.ddc.core.language.SentenceOperator;
+import com.imperva.ddc.core.query.*;
+import com.imperva.ddc.service.DirectoryConnectorService;
 
 import java.util.ArrayList;
 import java.util.List;
