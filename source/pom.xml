@@ -24,7 +24,7 @@
         <dependencies>
                 <dependency>
                 <artifactId>ddc-core</artifactId>
-                <groupId>com.imperva.ddc</groupId>
+                <groupId>com.imperva</groupId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
