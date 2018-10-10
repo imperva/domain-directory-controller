@@ -17,7 +17,6 @@ Internally DDC makes use of apache directory ldap API and adds the following enh
 - Secured connection
 - Automatically retries in case of failure
 - Automatically resolve host to IP
-- Support search in Multiple AD servers
 - Support Primary & Secondary AD servers
 - Easy API to retrieve data for each endpoint in query
 - Helpful builtin functionalities: 
