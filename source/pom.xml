@@ -49,16 +49,6 @@
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
-    <!--<distributionManagement>-->
-        <!--<repository>-->
-            <!--<id>libs-release-local</id>-->
-            <!--<url>https://il-mavenrep-lp1/libs-release-local</url>-->
-        <!--</repository>-->
-        <!--<snapshotRepository>-->
-            <!--<id>libs-snapshot-local</id>-->
-            <!--<url>https://il-mavenrep-lp1/libs-snapshot-local</url>-->
-        <!--</snapshotRepository>-->
-    <!--</distributionManagement>-->
 	<build>
 		<plugins>
             <plugin>
