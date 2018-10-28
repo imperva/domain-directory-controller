@@ -1,3 +1,6 @@
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.imperva/ddc-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.imperva/ddc-core)
+
 # DDC - Domain Directory Controller
 DDC is an Active Directory Java SDK designed to simplify AD interaction for small, medium and large projects. 
 DDC is a portable Java library provided with a friendly API, allowing you to quickly compose simple or complicated 
