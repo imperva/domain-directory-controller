@@ -52,11 +52,11 @@ public class ConnectionResponse {
     }
 
     /**
-     * @return True if connection's results contains at least one succeeded connection, otherwise false
+     * @return False if connection's results contains at least one succeeded connection, otherwise false
      */
     public boolean isError() {
         for (Map.Entry<String, Status> entry : statuses.entrySet()) {
-            if (entry.getValue().isError()) {
+            if (!entry.getValue().isError()) {
                 return false;
             }
         }
