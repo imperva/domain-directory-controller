@@ -3,4 +3,4 @@ jdk:
 - oraclejdk8
 install: true
 script: 
-  - mvn -f sources/pom.xml install  
+  - mvn -f source/pom.xml install  
