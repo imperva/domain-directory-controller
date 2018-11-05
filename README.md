@@ -371,9 +371,9 @@ for (PartitionResponse partitionResponse : queryResponse.get()) {
 ...
 ```
 
-#### Use Case 8 - Change Requests: Add, Remove, Replace AD's objects 
+#### Use Case 8 - Change Requests: Add, Remove, Replace AD's objects' fields 
 
-In order to change AD's object's fields a ChangeRequest object is needed.
+In order to change AD's objects' fields a ChangeRequest object is needed.
 Using the ChangeRequest object you can specify the field and values you want to add, remove or replace.
 
 ```java
