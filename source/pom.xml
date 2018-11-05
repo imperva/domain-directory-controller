@@ -14,6 +14,32 @@
     <url>https://github.com/imperva/domain-directory-controller.git</url>
 
 
+<profiles>
+       <profile>
+           <repositories>
+               <repository>
+                   <snapshots>
+                       <enabled>false</enabled>
+                   </snapshots>
+                   <id>bintray-imperva-admin-imperva.maven.repository</id>
+                   <name>bintray</name>
+                   <url>https://dl.bintray.com/imperva-admin/imperva.maven.repository</url>
+               </repository>
+           </repositories>
+           <pluginRepositories>
+               <pluginRepository>
+                   <snapshots>
+                       <enabled>false</enabled>
+                   </snapshots>
+                   <id>bintray-imperva-admin-imperva.maven.repository</id>
+                   <name>bintray-plugins</name>
+                   <url>https://dl.bintray.com/imperva-admin/imperva.maven.repository</url>
+               </pluginRepository>
+           </pluginRepositories>
+           <id>bintray</id>
+       </profile>
+   </profiles>
+	
     <!-- Project modules. Compiled or Installed together  -->
     <modules>
         <module>ddc-core</module>
