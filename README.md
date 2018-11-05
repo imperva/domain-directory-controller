@@ -1,5 +1,5 @@
 
-[![Build Status](https://www.travis-ci.org/imperva/domain-directory-controller.svg?branch=master)](https://www.travis-ci.org/imperva/domain-directory-controller?branch=travis)
+[![Build Status](https://www.travis-ci.org/imperva/domain-directory-controller.svg?branch=travis)](https://www.travis-ci.org/imperva/domain-directory-controller?branch=travis)
 
 
 
