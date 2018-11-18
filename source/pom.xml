@@ -4,9 +4,9 @@
 
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
-    <groupId>com.imperva</groupId>
+    <groupId>com.imperva.ddc</groupId>
     <artifactId>domain-directory-controller</artifactId>
-    <version>7.2.0.0.0.0-SNAPSHOT</version>
+    <version>7.2.0.0.0.0</version>
     <name>Domain Directory Controller</name>
     <description>
         DDC is an Active Directory Java SDK designed to simplify AD interaction for small, medium and large projects.
@@ -20,6 +20,21 @@
         <module>ddc-core</module>
         <module>ddc-service</module>
     </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <bintray.repo>imperva.opensource.maven.repository</bintray.repo>
+        <bintray.package>domain-directory-controller</bintray.package>
+    </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>bintray-imperva-admin-imperva.opensource.maven.repository</id>
+            <name>imperva-admin-imperva.opensource.maven.repository</name>
+            <url>https://api.bintray.com/maven/imperva-admin/${bintray.repo}/${bintray.package}/;override=1</url>
+        </repository>
+    </distributionManagement>
+
 
     <dependencyManagement>
         <dependencies>
@@ -38,15 +53,8 @@
             <version>1.7.6</version>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
-    <distributionManagement>
-        <repository>
-            <id>bintray-imperva-admin-imperva.opensource.maven.repository</id>
-            <name>imperva-admin-imperva.opensource.maven.repository</name>
-            <url>https://api.bintray.com/maven/imperva-admin/imperva.opensource.maven.repository/[PACKAGE_NAME]/;publish=1</url>
-        </repository>
-    </distributionManagement>
+
     <build>
         <plugins>
             <plugin>
