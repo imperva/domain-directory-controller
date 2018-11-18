@@ -1,0 +1,5 @@
+<server>
+    <id>bintray-imperva-admin-imperva.opensource.maven.repository</id>
+    <username>${env.BINTRAY_USER}</username>
+    <password>${env.BINTRAY_KEY}</password>
+</server>
