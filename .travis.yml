@@ -2,9 +2,24 @@ language: java
 jdk:
 - oraclejdk8
 install: true
-script: 
-  - mvn -f source/pom.xml install
-  
+stages:
+- name: build
+- name: publish-snapshot
+  if: branch = master AND type IN (push)
+- name: publish-release
+  if: branch = release AND type IN (push)
+jobs:
+  include:
+  - stage: build
+    script: mvn -f source/pom.xml install
+  - stage: publish-snapshot
+    script: cp .travis.settings.xml $HOME/.m2/settings.xml && mvn -f source/pom.xml deploy
+  - stage: publish-release
+    script: cp .travis.settings.xml $HOME/.m2/settings.xml && mvn -f source/pom.xml deploy
 cache:
   directories:
-  - $HOME/.m2
+  - "$HOME/.m2"
+env:
+  global:
+  - secure: Zmo9IfZWUz1xEoR0YibfgDAYWmjLhhC/dS3D7yAx7gwQBoOiV45rShFGw1L8WP2hWM/4xF4Gurbo9TaMjoTWAT0D4HFUZX9vGVLJjW596CVhs3P5DvDmBJB242EVirXcn0qXxtjbWEWWluGgJgug6SWc7zRL+dSEoonB4sxxdqAgWwCYw6ER4mUcKvQtBR07tqfzbYHMEI+F8NocvhPHp2OMwyjf04j1nwbyqX8JNyVfCgUuwEadovJ+HDa+T/y8LNA4wjXK5htcAD0sbe6Rh2F1yyp2JyUCJVy458qOhxvz16FgB7qn1IilPhUvcZy+qQTZT3lbMempbZxOuYZiR2YVjpzDxCItCsJAqiRqBRPsQTYGJl8h+XjKJ0Sl8nYVcV0Q3GEcSNv0N3ENJGOfu0wzFwNU5IXosGrp5m8gja9YiB3hWKNzjdjwuZNDTdu/y7U2xCcupWF0jY2NXSvPoXPnODZtcFRe/wVguwGbIrNIWo8xHmi/VPD+b79DCfSkh/IPEF1NxjjYTsWwtyF9JNhhRXxEeYQhuQ1Wb6IZCIar4Mo1irKW0riLj1QSZ1vyE7f60SPJ+kH1XRX7BSkA66h0DV7Rbv8zZCD1hy/SKLklivdx2lWKlMuF5SbIPqfRVIreY6Pmuwcf6w9V5b9rzWO5btda9gn6CyjWHqtqVT4=
+  - secure: XUOHsRC7KXcuuWeSiBJW377WIqzejj6gFR1HPPgQYt4ooLKWdBGYwvVDtp5MJ304blVZkoY4kKKtdtemH8ynMmTcL8EwdviMJH5hmFzYR7l183DBMueyxnnNT3GO3pkl3FUHR8T4qu0VHcV4PihgH7/ry2ZQL1IFTN/G+sotUCOFCQxtE3xvRrJhyPNN3IMHo7tLQR/Hew7NA2jgW8Im2LUupBE7E4jTXWBsQRFL31MUZHjqK8ZWQvxnQpSHfiIPhg3M1MMYse5JiVqls/EP/Xgw7yp+4ez6+awTG9ZbvyFEIAklDVeNENU3YqNLgmAGGksCR6RBuTUtPGnh1ITeKxVplgfgwpJBX2/CPjXEjt79V+6IYcrjfeD6gS9pEXMVsj9D9OLUEfO11qr5p8uA9MzxVavFuFnlpYP1YRYWJELp7rZOZcjVOfxb6ZckFkZf/90NoZC3wYzdKH4ucMzeI5+hMRkdRNAw0BbAMKgzXVj9VgYs+yNMB0J1KjNBfE6R1Wy7ByaHTzLNeuAFH0fY+0ubKSuio6KJXLoBsPn2x+g7EwwDKAl+HS2sPLjsmzW1ZPybw4z+hPosx8zuR6R0Uy5S1F94pXHr5+8unkOrJfZm8VFUYfeexijf8IzxUeaQEmARHWQCfs+pWnkuJiqzzEjIHlZOHtQnF3SOEgpcUnc=
