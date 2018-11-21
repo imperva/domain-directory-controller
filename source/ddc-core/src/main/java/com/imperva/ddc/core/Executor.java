@@ -27,11 +27,14 @@ class Executor {
     }
 
     void execute(ChangeRequest changeRequest) {
-        ChangeRequestExecutor changeRequestExecutor = new ChangeRequestExecutor(changeRequest);
+        ChangeRequestExecutor changeRequestExecutor = queryRequestExecutorFactoryGetInstance().create(changeRequest);
         changeRequestExecutor.execute();
     }
 
-
+    void execute(RemoveRequest removeRequest) {
+        RemoveRequestExecutor removeRequestExecutor = queryRequestExecutorFactoryGetInstance().create(removeRequest);
+        removeRequestExecutor.execute();
+    }
     /**
      * Test endpoint connectivity
      *

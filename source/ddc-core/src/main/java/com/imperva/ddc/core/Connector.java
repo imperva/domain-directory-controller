@@ -18,6 +18,7 @@ public class Connector implements AutoCloseable {
     private Executor executor = new Executor();
     private QueryRequest queryRequest;
     private ChangeRequest changeRequest;
+    private RemoveRequest removeRequest;
     private RequestType requestType;
 
     public Connector(QueryRequest queryRequest) {
@@ -28,6 +29,9 @@ public class Connector implements AutoCloseable {
         setRequest(changeRequest);
     }
 
+    public Connector(RemoveRequest removeRequest) {
+        setRequest(removeRequest);
+    }
 
     public void setRequest(QueryRequest queryRequest) {
         this.queryRequest = queryRequest;
@@ -37,6 +41,11 @@ public class Connector implements AutoCloseable {
     public void setRequest(ChangeRequest changeRequest) {
         this.changeRequest = changeRequest;
         requestType = RequestType.CHANGE;
+    }
+
+    public void setRequest(RemoveRequest removeRequest) {
+        this.removeRequest = removeRequest;
+        requestType = RequestType.REMOVE;
     }
 
 
@@ -101,6 +110,11 @@ public class Connector implements AutoCloseable {
         executor.execute(changeRequest);
     }
 
+    public void executeRemoveRequest() {
+        if (requestType != RequestType.REMOVE)
+            throw new InvalidExecuteException("The queryRequest object in the connector class doesn't match with the executeRemoveRequest() method");
+        executor.execute(removeRequest);
+    }
 
     /**
      * Test endpoint connectivity
