@@ -1,22 +1,12 @@
 package com.imperva.ddc.core.query;
 
-import org.apache.directory.api.ldap.model.name.Dn;
-
+/**
+ * Created by Shiran.Hersonsky on 19/11/2018.
+ */
 
 public class AddModificationDetails extends ModificationDetails {
 
-    private String value;
-
-    public AddModificationDetails(String dn, Field attribute, String value) {
+    public AddModificationDetails(String dn, Field attribute){
         super(dn, attribute, Operation.ADD);
-        this.value=value;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
     }
 }

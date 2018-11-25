@@ -57,7 +57,7 @@ public class ChangeRequest extends Request{
         }
         Field field = new Field();
         field.setType(fieldType);
-        modificationDetailsList.add(new AddModificationDetails(dn,field,value));
+        modificationDetailsList.add(new AddModificationDetails(dn,field));
         return this;
     }
 
