@@ -2,6 +2,7 @@ package com.imperva.ddc.core;
 
 import com.imperva.ddc.core.query.ChangeRequest;
 import com.imperva.ddc.core.query.QueryRequest;
+import com.imperva.ddc.core.query.RemoveRequest;
 
 /**
  * Created by gabi.beyo on 05/07/2015.
@@ -17,9 +18,11 @@ class RequestExecutorFactory {
         return executor;
     }
 
-
-
     ChangeRequestExecutor create(ChangeRequest changeRequest){
         return new ChangeRequestExecutor(changeRequest);
+    }
+
+    RemoveRequestExecutor create(RemoveRequest removeRequest){
+        return new RemoveRequestExecutor(removeRequest);
     }
 }

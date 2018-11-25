@@ -20,21 +20,23 @@ public class Main {
 
     public static void main(String[] args) {
 
-        useCase1();
+//        useCase1();
+//
+//        useCase2();
+//
+//        useCase3();
+//
+//        useCase4();
+//
+//        useCase5();
+//
+//        useCase6();
+//
+//        useCase7();
+//
+//        useCase8();
 
-        useCase2();
-
-        useCase3();
-
-        useCase4();
-
-        useCase5();
-
-        useCase6();
-
-        useCase7();
-
-        useCase8();
+        DeleteEntity();
     }
 
 
@@ -277,13 +279,28 @@ public class Main {
         }
     }
 
+
+    private static void DeleteEntity() {
+
+        Endpoint endpoint = createEndpoint();
+
+        RemoveRequest removeRequest = new RemoveRequest("CN=Remove,OU=ITP-USERS,DC=itp,DC=impv,DC=com");
+        removeRequest.setEndpoint(endpoint);
+
+        try (Connector connector = new Connector(removeRequest)) {
+            connector.executeRemoveRequest();
+        }
+    }
+
+
+
     private static Endpoint createEndpoint() {
         Endpoint endpoint = new Endpoint();
         endpoint.setSecuredConnection(false);
         endpoint.setPort(389);
-        endpoint.setHost("<YOUR IP>");
-        endpoint.setPassword("<YOUR PASS>");
-        endpoint.setUserAccountName("<DOMAIN>\\<NAME>"); //* You can us the user's DistinguishedName as well
+        endpoint.setHost("10.100.65.15");
+        endpoint.setPassword("Barbapapa1@");
+        endpoint.setUserAccountName("ITP\\administrator"); //* You can us the user's DistinguishedName as well
         //*endpoint.setSecondaryPort(389);
         //*endpoint.setSecondaryHost("10.100.10.100");
         //*endpoint.setSecuredConnectionSecondary(false);
