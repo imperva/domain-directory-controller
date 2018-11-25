@@ -48,7 +48,7 @@ public class ActiveDirectorySearchCriteriaBuilderImpl extends SearchCriteriaBuil
             case GROUP_MEMBER_OF_RECURSIVE:
                 result = "memberof:1.2.840.113556.1.4.1941:";
                 break;
-            case USER_ACCOUNT_CONTROL:
+            case USER_ACCOUNT_CONTROL_FILTER:
                 result="UserAccountControl:1.2.840.113556.1.4.803:";
                 break;
             default:

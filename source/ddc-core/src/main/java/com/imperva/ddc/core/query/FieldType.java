@@ -40,4 +40,5 @@ public enum FieldType {
     COMMON_NAME,
     MEMBER,
     USER_ACCOUNT_CONTROL,
+    USER_ACCOUNT_CONTROL_FILTER,
 }

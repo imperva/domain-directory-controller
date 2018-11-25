@@ -519,7 +519,7 @@ public class DirectoryConnectorService {
 
         queryRequest.addRequestedField(FieldType.LOGON_NAME);
         Sentence entity = new QueryAssembler().addPhrase(FieldType.DISTINGUISHED_NAME, PhraseOperator.EQUAL, userDN)
-                .addPhrase(FieldType.USER_ACCOUNT_CONTROL, PhraseOperator.EQUAL, "2").closeSentence(); // 2 means account is disabled
+                .addPhrase(FieldType.USER_ACCOUNT_CONTROL_FILTER, PhraseOperator.EQUAL, "2").closeSentence(); // 2 means account is disabled
         queryRequest.addSearchSentence(entity);
         QueryResponse queryResponse = null;
         try(Connector connector = new Connector(queryRequest)){

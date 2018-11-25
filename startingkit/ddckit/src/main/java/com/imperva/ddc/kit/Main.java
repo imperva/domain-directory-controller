@@ -136,6 +136,7 @@ public class Main {
         queryRequest.addRequestedField(FieldType.CITY);
         queryRequest.addRequestedField(FieldType.PHONE_NUMBER);
         queryRequest.addRequestedField(FieldType.DISTINGUISHED_NAME);
+        queryRequest.setPageChunkSize(100);
 
         QueryAssembler queryAssembler = new QueryAssembler();
 
@@ -195,7 +196,7 @@ public class Main {
         queryRequest.addRequestedField(FieldType.CITY);
         queryRequest.addRequestedField(FieldType.PHONE_NUMBER);
         queryRequest.addRequestedField(FieldType.DISTINGUISHED_NAME);
-
+        queryRequest.setPageChunkSize(100);
         QueryAssembler queryAssembler = new QueryAssembler();
 
         //* Create the dynamic sentence: users which their name results to be values of the list

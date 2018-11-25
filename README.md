@@ -1,3 +1,6 @@
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.imperva/ddc-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.imperva/ddc-core)
+
 # DDC - Domain Directory Controller
 DDC is an Active Directory Java SDK designed to simplify AD interaction for small, medium and large projects. 
 DDC is a portable Java library provided with a friendly API, allowing you to quickly compose simple or complicated 
@@ -70,13 +73,13 @@ DDC is a Maven project (binaries are deployed in Maven Central) so you can impor
         <dependency>
             <artifactId>ddc-core</artifactId>
             <groupId>com.imperva.opensource.ddc</groupId>
-            <version><VERSION></version>
+            <version>7.1.0.0.0.0</version>
         </dependency>
        <!--To work with ddc service wrapper add the following dependency-->
         <dependency>
             <artifactId>ddc-service</artifactId>
             <groupId>com.imperva.opensource.ddc</groupId>
-            <version><VERSION></version>
+            <version>7.1.0.0.0.0</version>
         </dependency>
     
 ~~~
@@ -368,9 +371,9 @@ for (PartitionResponse partitionResponse : queryResponse.get()) {
 ...
 ```
 
-#### Use Case 8 - Change Requests: Add, Remove, Replace AD's objects 
+#### Use Case 8 - Change Requests: Add, Remove, Replace AD's objects' fields 
 
-In order to change AD's object's fields a ChangeRequest object is needed.
+In order to change AD's objects' fields a ChangeRequest object is needed.
 Using the ChangeRequest object you can specify the field and values you want to add, remove or replace.
 
 ```java
