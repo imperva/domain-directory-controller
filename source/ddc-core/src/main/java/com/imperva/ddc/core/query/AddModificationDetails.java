@@ -1,12 +1,19 @@
 package com.imperva.ddc.core.query;
 
-/**
- * Created by Shiran.Hersonsky on 19/11/2018.
- */
-
 public class AddModificationDetails extends ModificationDetails {
 
-    public AddModificationDetails(String dn, Field attribute){
+    private String value;
+
+    public AddModificationDetails(String dn, Field attribute, String value) {
         super(dn, attribute, Operation.ADD);
+        this.value=value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

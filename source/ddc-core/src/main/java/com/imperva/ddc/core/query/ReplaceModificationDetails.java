@@ -1,8 +1,5 @@
 package com.imperva.ddc.core.query;
 
-import org.apache.directory.api.ldap.model.name.Dn;
-
-
 public class ReplaceModificationDetails extends ModificationDetails {
 
     private String value;

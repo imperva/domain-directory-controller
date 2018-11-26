@@ -121,6 +121,7 @@ public abstract class RequestBuilder {
      * The LDAP filter specification assigns special meaning to the several characters:
      * http://social.technet.microsoft.com/wiki/contents/articles/5312.active-directory-characters-to-escape.aspx
      */
+    //todo fix signature. Only FieldType is necessary here
     protected static String escapeSpecialChars(String str, Field field) {
         if(str == null)
             throw new ParsingException("Phrases value can't be empty");
@@ -152,5 +153,6 @@ public abstract class RequestBuilder {
         return escapedStr;
     }
 
+    //todo consider implement a default implementation here as not every class implementor needs this method
     public abstract void translateFilter();
 }

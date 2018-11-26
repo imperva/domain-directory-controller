@@ -9,6 +9,7 @@ import com.imperva.ddc.core.language.searchcriteria.SearchCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.security.InvalidParameterException;
+import java.util.List;
 
 /**
  * Created by gabi.beyo on 07/06/2015.
@@ -19,6 +20,7 @@ public class Connector implements AutoCloseable {
     private QueryRequest queryRequest;
     private ChangeRequest changeRequest;
     private RemoveRequest removeRequest;
+    private AddRequest addRequest;
     private RequestType requestType;
 
     public Connector(QueryRequest queryRequest) {
@@ -33,9 +35,18 @@ public class Connector implements AutoCloseable {
         setRequest(removeRequest);
     }
 
+    public Connector(AddRequest addRequest) {
+        setRequest(addRequest);
+    }
+
     public void setRequest(QueryRequest queryRequest) {
         this.queryRequest = queryRequest;
         requestType = RequestType.QUERY;
+    }
+
+    public void setRequest(AddRequest addRequest) {
+        this.addRequest = addRequest;
+        requestType = RequestType.ADD;
     }
 
     public void setRequest(ChangeRequest changeRequest) {
@@ -116,6 +127,18 @@ public class Connector implements AutoCloseable {
         executor.execute(removeRequest);
     }
 
+    public void executeAddequest() {
+        if (requestType != RequestType.ADD)
+            throw new InvalidExecuteException("The queryRequest object in the connector class doesn't match with the executeAddRequest() method");
+        RequestBridgeBuilderDirector builderManager = searchCriteriaBridgeBuilderDirectorImplGetInstance();
+
+        builderManager.build(addRequest);
+        AddCriteria addCriteria = builderManager.get();
+        addRequest.setFields(addCriteria.getFields());
+        addRequest.setDn(addCriteria.getTranslatedDN());
+        executor.execute(addRequest);
+    }
+
     /**
      * Test endpoint connectivity
      *
@@ -137,9 +160,15 @@ public class Connector implements AutoCloseable {
         if (requestType == RequestType.QUERY) {
             if (queryRequest != null)
                 queryRequest.close();
-        } else {
+        } else if(requestType == RequestType.CHANGE) {
             if (changeRequest != null)
                 changeRequest.close();
+        } else if(requestType == RequestType.ADD){
+            if (addRequest != null)
+                addRequest.close();
+        } else if(requestType == RequestType.REMOVE){
+            if (removeRequest != null)
+                removeRequest.close();
         }
     }
 

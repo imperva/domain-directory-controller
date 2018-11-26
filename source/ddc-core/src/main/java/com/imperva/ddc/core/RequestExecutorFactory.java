@@ -1,5 +1,6 @@
 package com.imperva.ddc.core;
 
+import com.imperva.ddc.core.query.AddRequest;
 import com.imperva.ddc.core.query.ChangeRequest;
 import com.imperva.ddc.core.query.QueryRequest;
 import com.imperva.ddc.core.query.RemoveRequest;
@@ -24,5 +25,9 @@ class RequestExecutorFactory {
 
     RemoveRequestExecutor create(RemoveRequest removeRequest){
         return new RemoveRequestExecutor(removeRequest);
+    }
+
+    AddRequestExecutor create(AddRequest addRequest){
+        return new AddRequestExecutor(addRequest);
     }
 }

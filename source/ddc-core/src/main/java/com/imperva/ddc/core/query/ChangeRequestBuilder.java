@@ -33,7 +33,9 @@ public class ChangeRequestBuilder extends RequestBuilder {
 
     @Override
     public void translateFilter() {
-
+        //todo this is never called, not sure this works. Review the entire flow
+        //todo Consider: this translation doesn't belong to here. It is not a filter translation
+        //todo this method is not meant to change any state of internal objects. Instead it should create a new state and add it to the criteria
         if (modificationDetailsList == null && modificationDetailsList.isEmpty()) {
             return;
         }

@@ -35,6 +35,11 @@ class Executor {
         RemoveRequestExecutor removeRequestExecutor = queryRequestExecutorFactoryGetInstance().create(removeRequest);
         removeRequestExecutor.execute();
     }
+
+    void execute(AddRequest addRequest) {
+        AddRequestExecutor addRequestExecutor = queryRequestExecutorFactoryGetInstance().create(addRequest);
+        addRequestExecutor.execute();
+    }
     /**
      * Test endpoint connectivity
      *

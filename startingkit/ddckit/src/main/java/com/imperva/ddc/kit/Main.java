@@ -20,23 +20,25 @@ public class Main {
 
     public static void main(String[] args) {
 
-//        useCase1();
-//
-//        useCase2();
-//
-//        useCase3();
-//
-//        useCase4();
-//
-//        useCase5();
-//
-//        useCase6();
-//
-//        useCase7();
-//
-//        useCase8();
+        useCase1();
 
-        DeleteEntity();
+        useCase2();
+
+        useCase3();
+
+        useCase4();
+
+        useCase5();
+
+        useCase6();
+
+        useCase7();
+
+        useCase8();
+
+        useCase9();
+
+        useCase10();
     }
 
 
@@ -280,15 +282,60 @@ public class Main {
     }
 
 
-    private static void DeleteEntity() {
+    private static void useCase9() {
 
         Endpoint endpoint = createEndpoint();
 
-        RemoveRequest removeRequest = new RemoveRequest("CN=Remove,OU=ITP-USERS,DC=itp,DC=impv,DC=com");
+        RemoveRequest removeRequest = new RemoveRequest("The Distinguished Name of the AD object to remove");
         removeRequest.setEndpoint(endpoint);
 
         try (Connector connector = new Connector(removeRequest)) {
             connector.executeRemoveRequest();
+        }
+    }
+
+    private static void useCase10() {
+
+        Endpoint endpoint = createEndpoint();
+
+        String dn = "<The Distinguished Name of the AD object to add>";
+
+        AddRequest addRequest = new AddRequest(dn);
+        addRequest.setEndpoint(endpoint);
+
+        Field sAMAccountName = new Field();
+        sAMAccountName.setType(FieldType.FIRST_NAME);
+        sAMAccountName.setValue("Gabi");
+
+        Field topObjectClass = new Field();
+        topObjectClass.setType(FieldType.OBJECT_CLASS);
+        topObjectClass.setValue("top");
+
+        Field personObjectClass = new Field();
+        personObjectClass.setType(FieldType.OBJECT_CLASS);
+        personObjectClass.setValue("person");
+
+        Field userObjectClass = new Field();
+        userObjectClass.setType(FieldType.OBJECT_CLASS);
+        userObjectClass.setValue("user");
+
+        Field commonName = new Field();
+        commonName.setType(FieldType.COMMON_NAME);
+        commonName.setValue("<CN>");
+        /* NOTE: The CN MUST BE IDENTICAL TO THE CN SPECIFIED IN YOUR DN
+        If your DN is: 'CN=Gabi,OU=Users', then the CN should be 'Gabi'
+        */
+
+        addRequest.
+                addField(topObjectClass).
+                addField(personObjectClass).
+                addField(commonName).
+                addField(sAMAccountName).
+                addField(userObjectClass);
+
+        try (Connector connector = new Connector(addRequest)) {
+            connector.executeAddequest();
+
         }
     }
 
@@ -298,9 +345,9 @@ public class Main {
         Endpoint endpoint = new Endpoint();
         endpoint.setSecuredConnection(false);
         endpoint.setPort(389);
-        endpoint.setHost("10.100.65.15");
-        endpoint.setPassword("Barbapapa1@");
-        endpoint.setUserAccountName("ITP\\administrator"); //* You can us the user's DistinguishedName as well
+        endpoint.setHost("<YOUR IP>");
+        endpoint.setPassword("<YOUR PASS>");
+        endpoint.setUserAccountName("<DOMAIN>\\<NAME>"); //* You can us the user's DistinguishedName as well
         //*endpoint.setSecondaryPort(389);
         //*endpoint.setSecondaryHost("10.100.10.100");
         //*endpoint.setSecuredConnectionSecondary(false);

@@ -2,8 +2,8 @@ package com.imperva.ddc.core;
 
 import com.imperva.ddc.core.exceptions.AddRequestFailedException;
 import com.imperva.ddc.core.exceptions.BaseException;
-import com.imperva.ddc.core.exceptions.RemoveRequestFailedException;
 import com.imperva.ddc.core.query.*;
+import org.apache.directory.api.ldap.model.entry.DefaultEntry;
 import org.apache.directory.api.ldap.model.entry.Entry;
 import org.apache.directory.api.ldap.model.exception.LdapException;
 import org.slf4j.Logger;
@@ -28,8 +28,12 @@ public class AddRequestExecutor {
 
             // Connection for each endpoint
             LdapConnectionResult ldapConnectionResult = driverGetInstance().connect(endpoint);
-
-          //TODO  ? ldapConnectionResult.getConnection().add();
+            Entry entry = new DefaultEntry();
+            entry.setDn(addRequest.getDn());
+            for (Field f: addRequest.getFields()) {
+                entry.add(f.getName(),f.getValue().toString());
+            }
+            ldapConnectionResult.getConnection().add(entry);
 
         } catch (LdapException | BaseException e) {
             LOGGER.error("Add Execution failed for Endpoint: " + host, e);
