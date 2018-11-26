@@ -26,12 +26,7 @@
         <dependency>
             <groupId>com.imperva</groupId>
             <artifactId>ddc-service</artifactId>
-            <version>7.0.0.0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.imperva</groupId>
-            <artifactId>ddc-core</artifactId>
-            <version>7.0.0.0.0.1-SNAPSHOT</version>
+            <version>7.2.0.0.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
