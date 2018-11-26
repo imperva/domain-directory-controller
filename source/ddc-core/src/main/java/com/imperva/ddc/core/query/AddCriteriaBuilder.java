@@ -3,7 +3,7 @@ package com.imperva.ddc.core.query;
 import java.util.Iterator;
 import java.util.List;
 
-public class AddRequestBuilder extends RequestBuilder {
+public class AddCriteriaBuilder extends RequestBuilder {
 
     private AddRequest addRequest;
 

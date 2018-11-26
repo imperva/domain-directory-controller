@@ -2,7 +2,7 @@ package com.imperva.ddc.core.query;
 
 import java.util.List;
 
-public class RemoveRequestBuilder extends RequestBuilder {
+public class RemoveCriteriaBuilder extends RequestBuilder {
 
     private RemoveRequest removeRequest;
 

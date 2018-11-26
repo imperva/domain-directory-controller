@@ -1,7 +1,7 @@
 package com.imperva.ddc.core.language.searchcriteria;
 
 import com.imperva.ddc.core.query.*;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 
 /**
  * Created by gabi.beyo on 18/06/2015.
@@ -19,23 +19,23 @@ public class RequestBridgeBuilderDirectorImpl extends RequestBridgeBuilderDirect
 
     @Override
     public void build(ChangeRequest changeRequest) {
-        this.changeRequestBuilder = changeRequestBuilderGetInstance(changeRequest.getDirectoryType());
-        this.changeRequestBuilder.setChangeRequest(changeRequest);
-        this.changeRequestBuilder.translateChangeFields();
+        this.changeCriteriaBuilder = changeRequestBuilderGetInstance(changeRequest.getDirectoryType());
+        this.changeCriteriaBuilder.setChangeRequest(changeRequest);
+        this.changeCriteriaBuilder.translateChangeFields();
     }
 
     @Override
     public void build(RemoveRequest removeRequest) {
-        this.removeRequestBuilder = removeRequestBuilderGetInstance(removeRequest.getDirectoryType());
-        this.removeRequestBuilder.setRemoveRequest(removeRequest);
-        this.removeRequestBuilder.translateFields();
+        this.removeCriteriaBuilder = removeRequestBuilderGetInstance(removeRequest.getDirectoryType());
+        this.removeCriteriaBuilder.setRemoveRequest(removeRequest);
+        this.removeCriteriaBuilder.translateFields();
     }
 
     @Override
     public void build(AddRequest addRequest) {
-        this.addRequestBuilder = addRequestBuilderGetInstance(addRequest.getDirectoryType());
-        this.addRequestBuilder.setAddRequest(addRequest);
-        this.addRequestBuilder.translateFields();
+        this.addCriteriaBuilder = addRequestBuilderGetInstance(addRequest.getDirectoryType());
+        this.addCriteriaBuilder.setAddRequest(addRequest);
+        this.addCriteriaBuilder.translateFields();
     }
 
     @Override
@@ -45,18 +45,18 @@ public class RequestBridgeBuilderDirectorImpl extends RequestBridgeBuilderDirect
         }
 
 
-        if (this.changeRequestBuilder != null) {
-            return (T)this.changeRequestBuilder.get();
+        if (this.changeCriteriaBuilder != null) {
+            return (T)this.changeCriteriaBuilder.get();
         }
 
-        if (this.addRequestBuilder != null) {
-            return (T)this.addRequestBuilder.get();
+        if (this.addCriteriaBuilder != null) {
+            return (T)this.addCriteriaBuilder.get();
         }
 
-        if (this.removeRequestBuilder != null) {
-            return (T)this.removeRequestBuilder.get();
+        if (this.removeCriteriaBuilder != null) {
+            return (T)this.removeCriteriaBuilder.get();
         }
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
 
@@ -66,15 +66,15 @@ public class RequestBridgeBuilderDirectorImpl extends RequestBridgeBuilderDirect
         return SearchCriteriaFactory.create(directoryType);
     }
 
-    ChangeRequestBuilder changeRequestBuilderGetInstance(DirectoryType directoryType){
+    ChangeCriteriaBuilder changeRequestBuilderGetInstance(DirectoryType directoryType){
         return ChangeRequestBuilderFactory.create(directoryType);
     }
 
-    AddRequestBuilder addRequestBuilderGetInstance(DirectoryType directoryType){
+    AddCriteriaBuilder addRequestBuilderGetInstance(DirectoryType directoryType){
         return AddRequestBuilderFactory.create(directoryType);
     }
 
-    RemoveRequestBuilder removeRequestBuilderGetInstance(DirectoryType directoryType){
+    RemoveCriteriaBuilder removeRequestBuilderGetInstance(DirectoryType directoryType){
         return RemoveRequestBuilderFactory.create(directoryType);
     }
 }

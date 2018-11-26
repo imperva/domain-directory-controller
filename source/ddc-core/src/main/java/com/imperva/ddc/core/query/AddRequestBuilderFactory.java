@@ -4,15 +4,15 @@ import org.apache.commons.lang.NotImplementedException;
 
 public class AddRequestBuilderFactory {
 
-    public static AddRequestBuilder create(DirectoryType directoryType){
-        AddRequestBuilder addRequestBuilder;
+    public static AddCriteriaBuilder create(DirectoryType directoryType){
+        AddCriteriaBuilder addCriteriaBuilder;
         switch (directoryType) {
             case MS_ACTIVE_DIRECTORY:
-                addRequestBuilder = new AddRequestBuilder();
+                addCriteriaBuilder = new AddCriteriaBuilder();
                 break;
             default:
                 throw new NotImplementedException();
         }
-        return addRequestBuilder;
+        return addCriteriaBuilder;
     }
 }

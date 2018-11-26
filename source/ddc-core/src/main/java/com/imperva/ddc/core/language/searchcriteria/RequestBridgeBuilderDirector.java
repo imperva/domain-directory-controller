@@ -7,9 +7,9 @@ import com.imperva.ddc.core.query.*;
  */
 public abstract class RequestBridgeBuilderDirector {
     protected SearchCriteriaBuilder searchCriteriaBuilder;
-    protected ChangeRequestBuilder changeRequestBuilder;
-    protected RemoveRequestBuilder removeRequestBuilder;
-    protected AddRequestBuilder addRequestBuilder;
+    protected ChangeCriteriaBuilder changeCriteriaBuilder;
+    protected RemoveCriteriaBuilder removeCriteriaBuilder;
+    protected AddCriteriaBuilder addCriteriaBuilder;
 
     public abstract void build(QueryRequest queryRequest);
 

@@ -3,7 +3,7 @@ package com.imperva.ddc.core.query;
 import com.imperva.ddc.core.language.changeCreteria.ChangeCriteria;
 import java.util.List;
 
-public class ChangeRequestBuilder extends RequestBuilder {
+public class ChangeCriteriaBuilder extends RequestBuilder {
 
     private ChangeRequest changeRequest;
 

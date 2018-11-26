@@ -4,8 +4,8 @@ import com.imperva.ddc.core.query.DirectoryType;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.TestCase.assertTrue;
+
 
 /**
  * Created by gabi.beyo on 06/07/2015.
