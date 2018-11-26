@@ -1,6 +1,7 @@
 package com.imperva.ddc.core.language.searchcriteria;
 
 import com.imperva.ddc.core.query.*;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Created by gabi.beyo on 18/06/2015.
@@ -24,6 +25,13 @@ public class RequestBridgeBuilderDirectorImpl extends RequestBridgeBuilderDirect
     }
 
     @Override
+    public void build(RemoveRequest removeRequest) {
+        this.removeRequestBuilder = removeRequestBuilderGetInstance(removeRequest.getDirectoryType());
+        this.removeRequestBuilder.setRemoveRequest(removeRequest);
+        this.removeRequestBuilder.translateFields();
+    }
+
+    @Override
     public void build(AddRequest addRequest) {
         this.addRequestBuilder = addRequestBuilderGetInstance(addRequest.getDirectoryType());
         this.addRequestBuilder.setAddRequest(addRequest);
@@ -44,11 +52,16 @@ public class RequestBridgeBuilderDirectorImpl extends RequestBridgeBuilderDirect
         if (this.addRequestBuilder != null) {
             return (T)this.addRequestBuilder.get();
         }
-        return null;
+
+        if (this.removeRequestBuilder != null) {
+            return (T)this.removeRequestBuilder.get();
+        }
+        throw new NotImplementedException();
     }
 
 
 
+    //todo consider AbstractFactory here instead of all this factories
     SearchCriteriaBuilder searchCriteriaBuilderGetInstance(DirectoryType directoryType){
         return SearchCriteriaFactory.create(directoryType);
     }
@@ -59,5 +72,9 @@ public class RequestBridgeBuilderDirectorImpl extends RequestBridgeBuilderDirect
 
     AddRequestBuilder addRequestBuilderGetInstance(DirectoryType directoryType){
         return AddRequestBuilderFactory.create(directoryType);
+    }
+
+    RemoveRequestBuilder removeRequestBuilderGetInstance(DirectoryType directoryType){
+        return RemoveRequestBuilderFactory.create(directoryType);
     }
 }

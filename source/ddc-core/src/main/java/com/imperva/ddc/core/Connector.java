@@ -124,6 +124,11 @@ public class Connector implements AutoCloseable {
     public void executeRemoveRequest() {
         if (requestType != RequestType.REMOVE)
             throw new InvalidExecuteException("The queryRequest object in the connector class doesn't match with the executeRemoveRequest() method");
+        RequestBridgeBuilderDirector builderManager = searchCriteriaBridgeBuilderDirectorImplGetInstance();
+
+        builderManager.build(removeRequest);
+        RemoveCriteria removeCriteria = builderManager.get();
+        removeRequest.setDn(removeCriteria.getTranslatedDN());
         executor.execute(removeRequest);
     }
 
