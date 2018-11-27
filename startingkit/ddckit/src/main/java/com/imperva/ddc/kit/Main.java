@@ -286,7 +286,7 @@ public class Main {
 
         Endpoint endpoint = createEndpoint();
 
-        RemoveRequest removeRequest = new RemoveRequest("The Distinguished Name of the AD object to remove");
+        RemoveRequest removeRequest = new RemoveRequest("<The Distinguished Name of the AD object to remove>");
         removeRequest.setEndpoint(endpoint);
 
         try (Connector connector = new Connector(removeRequest)) {
@@ -303,39 +303,19 @@ public class Main {
         AddRequest addRequest = new AddRequest(dn);
         addRequest.setEndpoint(endpoint);
 
-        Field sAMAccountName = new Field();
-        sAMAccountName.setType(FieldType.FIRST_NAME);
-        sAMAccountName.setValue("Gabi");
-
-        Field topObjectClass = new Field();
-        topObjectClass.setType(FieldType.OBJECT_CLASS);
-        topObjectClass.setValue("top");
-
-        Field personObjectClass = new Field();
-        personObjectClass.setType(FieldType.OBJECT_CLASS);
-        personObjectClass.setValue("person");
-
-        Field userObjectClass = new Field();
-        userObjectClass.setType(FieldType.OBJECT_CLASS);
-        userObjectClass.setValue("user");
-
-        Field commonName = new Field();
-        commonName.setType(FieldType.COMMON_NAME);
-        commonName.setValue("<CN>");
-        /* NOTE: The CN MUST BE IDENTICAL TO THE CN SPECIFIED IN YOUR DN
-        If your DN is: 'CN=Gabi,OU=Users', then the CN should be 'Gabi'
-        */
-
         addRequest.
-                addField(topObjectClass).
-                addField(personObjectClass).
-                addField(commonName).
-                addField(sAMAccountName).
-                addField(userObjectClass);
+                addField(new Field(FieldType.OBJECT_CLASS,"top")).
+                addField(new Field(FieldType.OBJECT_CLASS,"person")).
+                addField(new Field(FieldType.OBJECT_CLASS,"user")).
+                addField(new Field(FieldType.COMMON_NAME,"<CN>")).
+                /* NOTE: The CN MUST BE IDENTICAL TO THE CN SPECIFIED IN YOUR DN
+                        If your DN is: 'CN=Gabi,OU=Users', then the CN should be 'Gabi'
+                */
+                addField(new Field(FieldType.FIRST_NAME,"Gabi"));
+
 
         try (Connector connector = new Connector(addRequest)) {
             connector.executeAddequest();
-
         }
     }
 
