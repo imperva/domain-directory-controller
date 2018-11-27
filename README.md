@@ -16,7 +16,7 @@ Internally DDC makes use of apache directory ldap API and adds the following enh
 - Although DDC currently supports Microsoft Active Directory only, it was designed to be easily extended to fit any other Active Directory implementation 
 - Easy Paging API 
 - Querying multiple endpoints with a single query
-- Change Requests: Add, Remove, Replace AD's objects
+- Change Requests: Add, Remove, Replace AD's objects and Objects' fields
 - Secured connection
 - Automatically retries in case of failure
 - Automatically resolve host to IP
@@ -374,7 +374,7 @@ for (PartitionResponse partitionResponse : queryResponse.get()) {
 #### Use Case 8 - Change Requests: Add, Remove, Replace AD's objects' fields 
 
 In order to change AD's objects' fields a ChangeRequest object is needed.
-Using the ChangeRequest object you can specify the field and values you want to add, remove or replace.
+Using the ChangeRequest object you can specify the field and values you want to add, remove or replace and call the connector.executeChangeRequest().
 
 ```java
 ...
@@ -395,6 +395,68 @@ try (Connector connector = new Connector(changeRequest)) {
 ...
 ```
 
+#### Use Case 9 - Remove Requests: Remove AD's objects 
+
+In order to delete AD's objects a RemoveRequest object is needed.
+When using the RemoveRequest object you need only specify the DN of the object to delete and call the connector.executeRemoveRequest().
+
+```java
+...
+
+//* Create a new Endpoint (see Use Case 1)
+
+RemoveRequest removeRequest = new RemoveRequest("<The Distinguished Name of the AD object to remove>");
+removeRequest.setEndpoint(endpoint);
+
+try (Connector connector = new Connector(removeRequest)) {
+    connector.executeRemoveRequest();
+}
+
+...
+```
+
+#### Use Case 10 - Remove Requests: Add AD's objects 
+
+In order to create AD's objects an AddRequest object is needed.
+When using the AddRequest object you need only specify the DN of the object to create and the minimum set of required fields for a valid AD object. Then call the connector.executeAddequest().
+
+```java
+...
+
+//* Create a new Endpoint (see Use Case 1)
+
+String dn = "<The Distinguished Name of the AD object to add>";
+
+AddRequest addRequest = new AddRequest(dn);
+addRequest.setEndpoint(endpoint);
+
+addRequest.
+        addField(new Field(FieldType.OBJECT_CLASS,"top")).
+        addField(new Field(FieldType.OBJECT_CLASS,"person")).
+        addField(new Field(FieldType.OBJECT_CLASS,"user")).
+        addField(new Field(FieldType.COMMON_NAME,"<CN>")).
+        /* NOTE: The CN MUST BE IDENTICAL TO THE CN SPECIFIED IN YOUR DN
+                 If your DN is: 'CN=Gabi,OU=Users', then the CN should be 'Gabi'
+        */
+        addField(new Field(FieldType.FIRST_NAME,"Gabi"));
+
+
+try (Connector connector = new Connector(addRequest)) {
+    connector.executeAddequest();
+}
+
+...
+```
+
+In this example we are creatimg a new *human* user and set its first name to 'Gabi'
+
+# FieldType
+As you can see, FieldType is a useful enumerator, used in the examples above.
+It is important to understand that FieldType is used for simplicity of code, make the code more durable and create an additional abstraction in order 
+to be able to represent the fields when using different LDAP implementations were the field name is slightly different.
+This means that if you prefer, you can always use plain Strings to represent your fields i.e givenName instead of FieldType.FIRST_NAME.
+
+Having said that, we encourage you to contribute to the project by adding missing FieldTypes to the enumerator.
 
 # Configuration
 DDC contains a single configuration file at this relative location location:
