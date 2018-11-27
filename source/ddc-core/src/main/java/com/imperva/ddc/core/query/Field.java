@@ -5,9 +5,19 @@ package com.imperva.ddc.core.query;
  * Represent a data-field
  */
 public class Field {
+
     private String name;
     private Object value;
     private FieldType type;
+
+    public Field(){
+
+    }
+
+    public  Field(FieldType fieldType, Object fieldValue){
+        this.type = fieldType;
+        this.value = fieldValue;
+    }
 
     /**
      * @return the real concrete Dyrectory implementation field name
