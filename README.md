@@ -1,6 +1,9 @@
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.imperva/ddc-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.imperva/ddc-core)
 
+
+[![Build Status](https://www.travis-ci.org/imperva/domain-directory-controller.svg?branch=travis)](https://www.travis-ci.org/imperva/domain-directory-controller?branch=travis)
+
 # DDC - Domain Directory Controller
 DDC is an Active Directory Java SDK designed to simplify AD interaction for small, medium and large projects. 
 DDC is a portable Java library provided with a friendly API, allowing you to quickly compose simple or complicated 
@@ -72,14 +75,14 @@ DDC is a Maven project (binaries are deployed in Maven Central) so you can impor
        <!--To work directly with ddc API add the following dependency-->
         <dependency>
             <artifactId>ddc-core</artifactId>
-            <groupId>com.imperva.opensource.ddc</groupId>
-            <version>7.1.0.0.0.0</version>
+            <groupId>com.imperva.ddc</groupId>
+            <version>7.2.0.0.0.0</version>
         </dependency>
        <!--To work with ddc service wrapper add the following dependency-->
         <dependency>
             <artifactId>ddc-service</artifactId>
-            <groupId>com.imperva.opensource.ddc</groupId>
-            <version>7.1.0.0.0.0</version>
+            <groupId>com.imperva.ddc</groupId>
+            <version>7.2.0.0.0.0</version>
         </dependency>
     
 ~~~
