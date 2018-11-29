@@ -1,5 +1,4 @@
-
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.imperva.ddc/ddc-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.imperva.ddc/ddc-core)
+[![Maven Central](https://img.shields.io/maven-central/v/com.imperva.ddc/ddc-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.imperva.ddc%22%20AND%20a:%22ddc-core%22)
 
 [![Build Status](https://www.travis-ci.org/imperva/domain-directory-controller.svg?branch=travis)](https://www.travis-ci.org/imperva/domain-directory-controller?branch=travis)
 
