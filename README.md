@@ -1,6 +1,5 @@
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.imperva/ddc-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.imperva/ddc-core)
-
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.imperva.ddc/ddc-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.imperva.ddc/ddc-core)
 
 [![Build Status](https://www.travis-ci.org/imperva/domain-directory-controller.svg?branch=travis)](https://www.travis-ci.org/imperva/domain-directory-controller?branch=travis)
 
@@ -76,13 +75,13 @@ DDC is a Maven project (binaries are deployed in Maven Central) so you can impor
         <dependency>
             <artifactId>ddc-core</artifactId>
             <groupId>com.imperva.ddc</groupId>
-            <version>7.2.0.0.0.0</version>
+            <version>7.3.0.0.0.0</version>
         </dependency>
        <!--To work with ddc service wrapper add the following dependency-->
         <dependency>
             <artifactId>ddc-service</artifactId>
             <groupId>com.imperva.ddc</groupId>
-            <version>7.2.0.0.0.0</version>
+            <version>7.3.0.0.0.0</version>
         </dependency>
     
 ~~~
