@@ -416,7 +416,7 @@ try (Connector connector = new Connector(removeRequest)) {
 ...
 ```
 
-#### Use Case 10 - Remove Requests: Add AD's objects 
+#### Use Case 10 - Add Requests: Add AD's objects 
 
 In order to create AD's objects an AddRequest object is needed.
 When using the AddRequest object you need only specify the DN of the object to create and the minimum set of required fields for a valid AD object. Then call the connector.executeAddequest().
