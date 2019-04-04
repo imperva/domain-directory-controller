@@ -139,6 +139,8 @@ public class DirectoryConnectorService {
             queryRequest.setObjectType(objectType);
             queryRequest.setIgnoreSSLValidations(true);
 
+            queryRequest.addRequestedField(FieldType.DISTINGUISHED_NAME);
+
             QueryAssembler queryAssembler = new QueryAssembler();
 
             LOGGER.debug("Resolving " + namesChunk.size() + " dns");
@@ -158,8 +160,10 @@ public class DirectoryConnectorService {
 
             List<String> result = new ArrayList<>();
             for (EntityResponse q : queryResponse.getAll()) {
-                //result.addAll(q.getValue().stream().filter(val -> val.getType() == FieldType.DISTINGUISHED_NAME).collect(Collectors.toList()).stream().map(v -> v.getValue().toString()).collect(Collectors.toList()));
-                result.add((String) q.getKey());
+                result.addAll(q.getValue().stream()
+                        .filter(val -> val.getType() == FieldType.DISTINGUISHED_NAME)
+                        .map(v -> v.getValue().toString())
+                        .collect(Collectors.toList()));
             }
             LOGGER.trace("Resolved DNs:");
             for (String res : result) {
