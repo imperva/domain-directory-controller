@@ -39,8 +39,9 @@ public class Main {
         useCase9();
 
         useCase10();
-    }
 
+        isEnabled();
+    }
 
     private static void useCase1() {
         Endpoint endpoint = createEndpoint();
@@ -322,12 +323,16 @@ public class Main {
 
 
     private static Endpoint createEndpoint() {
+        return createEndpoint("<YOUR IP>",389,"<DOMAIN>\\<NAME>","<YOUR PASS>",false);
+    }
+
+    private static Endpoint createEndpoint(String host, int port, String userName, String pass, boolean isSecured) {
         Endpoint endpoint = new Endpoint();
-        endpoint.setSecuredConnection(false);
-        endpoint.setPort(389);
-        endpoint.setHost("<YOUR IP>");
-        endpoint.setPassword("<YOUR PASS>");
-        endpoint.setUserAccountName("<DOMAIN>\\<NAME>"); //* You can us the user's DistinguishedName as well
+        endpoint.setSecuredConnection(isSecured);
+        endpoint.setPort(port);
+        endpoint.setHost(host);
+        endpoint.setPassword(pass);
+        endpoint.setUserAccountName(userName); //* You can us the user's DistinguishedName as well
         //*endpoint.setSecondaryPort(389);
         //*endpoint.setSecondaryHost("10.100.10.100");
         //*endpoint.setSecuredConnectionSecondary(false);
@@ -343,5 +348,13 @@ public class Main {
         queryRequest.setSizeLimit(1000);
         queryRequest.setTimeLimit(1000);
         return queryRequest;
+    }
+
+    private static void isEnabled() {
+        Endpoint endpointAdmin = createEndpoint("<10.10.10.10>",389,"<domain\\administrator>","<pass>",false);
+        Endpoint endpointToCheckIfEnabled = createEndpoint("<10.10.10.10>",389,"domain\\userToCheckIfEnabled","<pass>",false);
+        ConnectionResponse connectionResponse = DirectoryConnectorService.authenticate(endpointAdmin,true, endpointToCheckIfEnabled);
+        boolean succeeded = !connectionResponse.isError();
+        System.out.println("Is Enabled - User is Authenticated and Enabled: " + succeeded);
     }
 }
