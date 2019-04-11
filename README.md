@@ -470,13 +470,7 @@ DDC enables querying Directory Servers in secured mode by just setting the setSe
 By default, DDC ignores all standard certificates validations, in order to change this behaviour set the following flag: ignore.ssl.cert.chain.exception=true to **false**.
 
 ##### Authentication Mode
-DDC enables setting a default authentication mode. The default mode is set to GSSAPI, in order to change this behaviour set the following flag: authentication.mechanism=GSSAPI to any of the following supported modes:
-- CRAM-MD5
-- DIGEST-MD5
-- GSSAPI
-- PLAIN
-- NTLM
-- GSS-SPNEGO
+DDC supports Simple Authentication mode only
 
 ##### Connection Timeout
 DDC enables setting a default timeout to DDC's queries. The default timeout value is set to 5000 seconds, in order to change this behaviour set the following flag connection.timeout=5000 to a different timeout value.

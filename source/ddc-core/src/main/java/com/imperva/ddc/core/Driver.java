@@ -139,7 +139,6 @@ class Driver extends DriverBase {
                 ((LdapNetworkConnection) connection).getConfig().setTimeout(timeout);
             }
             BindRequest bindRequest = new BindRequestImpl();
-            bindRequest.setSaslMechanism(DDCProperties.getInstance().getProperty("authentication.mechanism").toUpperCase());//* SupportedSaslMechanisms.PLAIN
             bindRequest.setCredentials(password);
             bindRequest.setSimple(true);
             if (accountNameType == AccountNameType.DOMAIN_USERNAME)
