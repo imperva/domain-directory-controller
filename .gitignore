@@ -2,3 +2,4 @@
 target/
 .idea/
 *.dummy.txt
+.DS_Store
