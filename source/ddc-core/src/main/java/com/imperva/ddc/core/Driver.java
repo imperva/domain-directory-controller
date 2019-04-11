@@ -155,6 +155,13 @@ class Driver extends DriverBase {
                     throw new LdapException(createLdapErrorMessage(bindResponse));
                 }
             }
+
+            try {
+                if (LOGGER.isTraceEnabled())
+                    LOGGER.trace(connection.getRootDse().toString());
+            } catch (Exception e) { /*DO NOTHING*/ }
+
+
             LOGGER.debug("Ldap Connection to " + host + " succeeded.");
         } catch (LdapAuthenticationException e) {
             String error = "Ldap Connection to " + host + " failed: " + e.toString();
