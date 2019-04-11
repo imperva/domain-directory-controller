@@ -63,24 +63,19 @@ public class DirectoryConnectorService {
             response = connector.testConnection();
         }
 
-        if (!allowEnabledOnly) {
+        if (!allowEnabledOnly || response.isError()) {
             return response;
         }
 
-        if (response.isError()) {
-            return response;
-        }
-
-        String username = endpoint.getOsUserName();
-        String userDN = Utils.isDistinguishName(username) ? username : resolveDistinguishedName(username, FieldType.LOGON_NAME, ObjectType.USER, endpointForAuth);
-        if (Utils.isEmpty(userDN))
+        String userIdentifier = endpoint.getOsAccountNameMode() == AccountNameType.DN ? endpoint.getUserAccountName() : endpoint.getOsUserName();
+        if (Utils.isEmpty(userIdentifier))
             throw new InvalidAuthenticationInfoException("Ldap connection to " + endpointForAuth.getHost() + " failed");
 
-        boolean isEnabled = isEnabled(endpointForAuth, endpoint.getOsUserName());
+        boolean isEnabled = isEnabled(endpointForAuth, userIdentifier);
         if (!isEnabled) {
             String error = "Ldap Connection to " + endpointForAuth.getHost() + " failed";
             Map<String, Status> statuses = response.getStatuses();
-            statuses.putIfAbsent(endpointForAuth.getHost(), new Oops(new UserDisabledException(error)));
+            statuses.put(endpointForAuth.getHost(), new Oops(new UserDisabledException(error)));
             boolean hasSecondary = !Utils.isEmpty(endpointForAuth.getSecondaryHost());
             boolean noSecondaryError = statuses.get(endpointForAuth.getSecondaryHost()) == null;
             if (hasSecondary && noSecondaryError) {
@@ -507,14 +502,20 @@ public class DirectoryConnectorService {
         return connectionResponse;
     }
 
-    private static boolean isEnabled(Endpoint endpointForAuth, String username) {
-        String userDN = Utils.isDistinguishName(username) ? username : resolveDistinguishedName(username, FieldType.LOGON_NAME, ObjectType.USER, endpointForAuth);
+    /**
+     *
+     * @param endpoint The endpoint {@link Endpoint} to query
+     * @param username Can be the sAMAccountName or the distinguishedName of the user
+     * @return true is user is enabled, otherwise false
+     */
+    public static boolean isEnabled(Endpoint endpoint, String username) {
+        String userDN = Utils.isDistinguishName(username) ? username : resolveDistinguishedName(username, FieldType.LOGON_NAME, ObjectType.USER, endpoint);
         if (Utils.isEmpty(userDN))
             return false;
         QueryRequest queryRequest = new QueryRequest();
         queryRequest.setDirectoryType(DirectoryType.MS_ACTIVE_DIRECTORY);
         List<Endpoint> endpoints = new ArrayList<>();
-        endpoints.add(endpointForAuth);
+        endpoints.add(endpoint);
         queryRequest.setEndpoints(endpoints);
         queryRequest.setSizeLimit(1);
         queryRequest.setTimeLimit(1000);
