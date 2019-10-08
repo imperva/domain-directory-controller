@@ -14,7 +14,7 @@ jobs:
   - stage: build
     script: mvn -f source/pom.xml install
   - stage: publish-snapshot
-    script: mvn --settings .travis.settings.xml -f source/pom.xml deploy
+    script: mvn --settings .travis.settings.xml -f source/pom.xml install
   - stage: publish-release
     script: mvn --settings .travis.settings.xml -f source/pom.xml deploy
 cache:
