@@ -30,6 +30,14 @@ public class QueryAssembler {
         return this;
     }
 
+    public QueryAssembler addPhrase(String fieldName, PhraseOperator phraseOperator, String value) {
+        Phrase phrase = new Phrase();
+        phrase.setValue(value);
+        phrase.setPhraseOperator(phraseOperator);
+        this.addPhrase(fieldName, phrase);
+        return this;
+    }
+
     /**
      * Adds a Phrase to the LDAP query
      * @param fieldType {@link FieldType} One of the available query attributes
@@ -44,12 +52,21 @@ public class QueryAssembler {
         return this;
     }
 
+
+    public QueryAssembler addPhrase(String fieldName, Phrase phrase) {
+        Field field = new Field();
+        field.setName(fieldName);
+        phrase.setAttribute(field);
+        searchPhrases.add(phrase);
+        return this;
+    }
+
     /**
      * Adds a Sentence to the LDAP query
      * @param sentence {@link Sentence} The Sentence to add
      * @return {@link QueryAssembler} Fluent API
      */
-    public  QueryAssembler addSentence(Sentence sentence){
+    public QueryAssembler addSentence(Sentence sentence){
         searchPhrases.add(sentence);
         return this;
     }
