@@ -74,13 +74,13 @@ DDC is a Maven project (binaries are deployed in Maven Central) so you can impor
         <dependency>
             <artifactId>ddc-core</artifactId>
             <groupId>com.imperva.ddc</groupId>
-            <version>7.3.3.0.0.0</version>
+            <version>7.3.4.0.0.0</version>
         </dependency>
        <!--To work with ddc service wrapper add the following dependency-->
         <dependency>
             <artifactId>ddc-service</artifactId>
             <groupId>com.imperva.ddc</groupId>
-            <version>7.3.3.0.0.0</version>
+            <version>7.3.4.0.0.0</version>
         </dependency>
     
 ~~~
