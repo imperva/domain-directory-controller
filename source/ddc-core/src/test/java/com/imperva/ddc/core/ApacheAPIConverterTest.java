@@ -2,7 +2,10 @@ package com.imperva.ddc.core;
 
 import com.imperva.ddc.core.query.*;
 import org.apache.directory.api.ldap.model.entry.DefaultEntry;
+import org.apache.directory.api.ldap.model.entry.DefaultModification;
 import org.apache.directory.api.ldap.model.entry.Entry;
+import org.apache.directory.api.ldap.model.entry.Modification;
+import org.apache.directory.api.ldap.model.entry.ModificationOperation;
 import org.apache.directory.api.ldap.model.exception.LdapException;
 import org.apache.directory.api.ldap.model.message.SearchRequest;
 import org.apache.directory.api.ldap.model.message.controls.PagedResults;
@@ -18,11 +21,12 @@ import static org.mockito.Mockito.when;
  * Created by gabi.beyo on 06/07/2015.
  */
 public class ApacheAPIConverterTest {
+    private static final String DN = "CN=Gabi,CN=Users,OU=ITP";
+    private ApacheAPIConverter converter;
 
     @Before
     public void setup() {
-
-
+        converter = new ApacheAPIConverter();
     }
 
     @Test
@@ -88,7 +92,7 @@ public class ApacheAPIConverterTest {
         try {
             List<Entry> entries = new ArrayList<>();
             Entry entry = new DefaultEntry();
-            entry.setDn("CN=Gabi,CN=Users,OU=ITP");
+            entry.setDn(DN);
             entry.add("givenName", "gabi");
             entries.add(entry);
 
@@ -104,5 +108,29 @@ public class ApacheAPIConverterTest {
         } catch (LdapException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testToModificationRemoveAttributeWithValue() {
+        final String value = "some group";
+        final Field field = new Field(FieldType.GROUP, value);
+        field.setName("memberOf");
+        final RemoveModificationDetails details = new RemoveModificationDetails(DN, field);
+
+        final Modification modification = converter.toModification(details);
+        assertEquals("Unexpected operation", ModificationOperation.REMOVE_ATTRIBUTE, modification.getOperation());
+        assertTrue("Expected attribute value", modification.getAttribute().contains(value));
+    }
+
+    @Test
+    public void testToModificationRemoveAttributeNoValue() {
+        final Field field = new Field();
+        field.setType(FieldType.GROUP);
+        field.setName("memberOf");
+        final RemoveModificationDetails details = new RemoveModificationDetails(DN, field);
+
+        final Modification modification = converter.toModification(details);
+        assertEquals("Unexpected operation", ModificationOperation.REMOVE_ATTRIBUTE, modification.getOperation());
+        assertEquals("Unexpected values", 0, modification.getAttribute().size());
     }
 }

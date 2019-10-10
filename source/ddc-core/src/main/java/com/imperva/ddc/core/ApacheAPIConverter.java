@@ -36,16 +36,21 @@ class ApacheAPIConverter {
     }
 
     public Modification toModification(ModificationDetails modificationDetails){
+        final String value = null == modificationDetails.getValue()
+                ? null
+                : modificationDetails.getValue().toString();
         Operation operation= modificationDetails.getOperation();
         String strAttribute= modificationDetails.getAttribute().getName();
 
         switch (operation){
             case ADD:
-                return new DefaultModification(ModificationOperation.ADD_ATTRIBUTE,strAttribute,((AddModificationDetails)modificationDetails).getValue());
+                return new DefaultModification(ModificationOperation.ADD_ATTRIBUTE, strAttribute, value);
             case REMOVE:
-                return new DefaultModification(ModificationOperation.REMOVE_ATTRIBUTE, strAttribute);
+                return null == value
+                        ? new DefaultModification(ModificationOperation.REMOVE_ATTRIBUTE, strAttribute)
+                        : new DefaultModification(ModificationOperation.REMOVE_ATTRIBUTE, strAttribute, value);
             case REPLACE:
-                return new DefaultModification(ModificationOperation.REPLACE_ATTRIBUTE,strAttribute,((ReplaceModificationDetails)modificationDetails).getValue());
+                return new DefaultModification(ModificationOperation.REPLACE_ATTRIBUTE, strAttribute, value);
             default:
                 return null;
         }
