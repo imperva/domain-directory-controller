@@ -35,6 +35,12 @@ public class ChangeRequest extends Request{
         return this;
     }
 
+    public ChangeRequest remove(final String dn, final FieldType fieldType, final Object value) {
+        modificationDetailsList.add(new RemoveModificationDetails(dn, new Field(fieldType, value)));
+
+        return this;
+    }
+
     public ChangeRequest replace(String dn, FieldType fieldType, String value) {
         Field field = new Field();
         field.setType(fieldType);
@@ -54,6 +60,10 @@ public class ChangeRequest extends Request{
         field.setType(fieldType);
         modificationDetailsList.add(new RemoveModificationDetails(dn,field));
         return this;
+    }
+
+    public ChangeRequest remove(final FieldType fieldType, final Object value) {
+        return remove(dn, fieldType, value);
     }
 
     public ChangeRequest replace(FieldType fieldType, String value) {

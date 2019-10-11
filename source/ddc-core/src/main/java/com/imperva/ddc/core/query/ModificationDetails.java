@@ -39,4 +39,8 @@ public class ModificationDetails {
     public void setAttributeName(String name){
         attribute.setName(name);
     }
+
+    public  Object getValue() {
+        return attribute.getValue();
+    }
 }
