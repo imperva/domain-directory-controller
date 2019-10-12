@@ -6,7 +6,7 @@
     <packaging>pom</packaging>
     <groupId>com.imperva.ddc</groupId>
     <artifactId>domain-directory-controller</artifactId>
-    <version>7.3.5.0.0.0-SNAPSHOT</version>
+    <version>7.3.6.0.0.0-SNAPSHOT</version>
     <name>Domain Directory Controller</name>
     <description>
         DDC is an Active Directory Java SDK designed to simplify AD interaction for small, medium and large projects.
