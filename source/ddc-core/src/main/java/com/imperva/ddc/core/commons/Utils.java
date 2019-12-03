@@ -15,6 +15,10 @@ public class Utils {
         return isDistinguishedName;
     }
 
+    public static boolean isUserNameFullDomain(String userAccountName) {
+        return userAccountName.contains("@");
+    }
+
     public static boolean containsCaseInsensitive(List<String> list, String str) {
         Set<String> set = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
         set.addAll(list);

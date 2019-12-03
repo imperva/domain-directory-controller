@@ -119,7 +119,7 @@ public class Endpoint implements AutoCloseable {
     }
 
     /**
-     * @param userAccountName User Distinguished Name  or Domain\UserName is a unique name that identifies a specific user
+     * @param userAccountName User Distinguished Name, Domain\UserName or UserName@FullDomain is a unique name that identifies a specific user
      */
     public void setUserAccountName(String userAccountName) {
         if(Utils.isEmpty(userAccountName)) {
@@ -134,9 +134,15 @@ public class Endpoint implements AutoCloseable {
             this.osUserName = null;
         } else {
             this.osAccountNameMode = AccountNameType.DOMAIN_USERNAME;
-            String[] splittedAccount = userAccountName.split("\\\\");
-            this.domain = splittedAccount[0];
-            this.osUserName = splittedAccount[1];
+            if (Utils.isUserNameFullDomain(userAccountName)) {
+                String[] splittedAccount = userAccountName.split("@");
+                this.domain = splittedAccount[1];
+                this.osUserName = splittedAccount[0];
+            } else {
+                String[] splittedAccount = userAccountName.split("\\\\");
+                this.domain = splittedAccount[0];
+                this.osUserName = splittedAccount[1];
+            }
         }
         this.userAccountName = userAccountName;
     }
