@@ -19,6 +19,11 @@ public class Field {
         this.value = fieldValue;
     }
 
+    public  Field(String fieldName, Object fieldValue){
+        this.name = fieldName;
+        this.value = fieldValue;
+    }
+
     /**
      * @return the real concrete Dyrectory implementation field name
      */
