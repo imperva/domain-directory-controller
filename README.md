@@ -74,13 +74,13 @@ DDC is a Maven project (binaries are deployed in Maven Central) so you can impor
         <dependency>
             <artifactId>ddc-core</artifactId>
             <groupId>com.imperva.ddc</groupId>
-            <version>7.3.4.0.0.0</version>
+            <version>7.3.6.0.0.0</version>
         </dependency>
        <!--To work with ddc service wrapper add the following dependency-->
         <dependency>
             <artifactId>ddc-service</artifactId>
             <groupId>com.imperva.ddc</groupId>
-            <version>7.3.4.0.0.0</version>
+            <version>7.3.6.0.0.0</version>
         </dependency>
     
 ~~~
@@ -116,21 +116,17 @@ boolean succeeded = !connectionResponse.isError();
 
 //* Create a new Endpoint (see Use Case 1)
 
-QueryRequest queryRequest = new QueryRequest();
-queryRequest.setDirectoryType(DirectoryType.MS_ACTIVE_DIRECTORY);
-queryRequest.setEndpoints(new ArrayList<Endpoint>(){{add(endpoint);}});
-queryRequest.setSizeLimit(1000);
-queryRequest.setTimeLimit(1000);
-
+QueryRequest queryRequest = createQueryRequest(endpoint);
 queryRequest.setObjectType(ObjectType.USER);
 //* Shortcut. Internally will add the relevant LDAP script to filter out any non human Entry (printers, machines etc.)
 
 queryRequest.addRequestedField(FieldType.EMAIL);
 queryRequest.addRequestedField(FieldType.CITY);
+queryRequest.addRequestedField(FieldType.DISTINGUISHED_NAME);
 
 QueryAssembler queryAssembler;
 queryAssembler = new QueryAssembler();
-Sentence firstNameSentence = queryAssembler.addPhrase(FieldType.FIRST_NAME, PhraseOperator.EQUAL, "Gabriel").closeSentence();
+Sentence firstNameSentence = queryAssembler.addPhrase(FieldType.FIRST_NAME, PhraseOperator.EQUAL, "Donald").closeSentence();
 
 queryRequest.addSearchSentence(firstNameSentence);
 
@@ -140,7 +136,7 @@ try(Connector connector = new Connector(queryRequest)) {
 }
 
 List fields = queryResponse.getAll().stream().map(res -> res.getValue()).collect(Collectors.toList());
-System.out.println("Use Case 2 - Query all users' phone number and city of users that their first name is 'Gabriel': " + fields.size());
+System.out.println("Use Case 2 - Query all users' phone number and city of users that their first name is 'Donald': " + fields.size() + "\n------------------\n");  
 
 ...
 ```
@@ -386,6 +382,7 @@ ChangeRequest changeRequest = new ChangeRequest("<The Distinguished Name of the 
 changeRequest.add(FieldType.CITY, "<value>");//* Add new field with value
 changeRequest.remove(FieldType.EMAIL);//* Remove field
 changeRequest.replace(FieldType.COUNTRY, "<value>");//* Replace field's value
+changeRequest.remove("sn");
 
 changeRequest.setEndpoint(endpoint);
 
@@ -435,11 +432,12 @@ addRequest.
         addField(new Field(FieldType.OBJECT_CLASS,"top")).
         addField(new Field(FieldType.OBJECT_CLASS,"person")).
         addField(new Field(FieldType.OBJECT_CLASS,"user")).
-        addField(new Field(FieldType.COMMON_NAME,"<CN>")).
+        addField(new Field("cn","<last name>")).
         /* NOTE: The CN MUST BE IDENTICAL TO THE CN SPECIFIED IN YOUR DN
-                 If your DN is: 'CN=Gabi,OU=Users', then the CN should be 'Gabi'
+                If your DN is: 'CN=Gabi,OU=Users', then the CN should be 'Gabi'
         */
-        addField(new Field(FieldType.FIRST_NAME,"Gabi"));
+        addField(new Field("givenName","<first name>")).
+        addField(new Field("sn", "<last name>"));
 
 
 try (Connector connector = new Connector(addRequest)) {
