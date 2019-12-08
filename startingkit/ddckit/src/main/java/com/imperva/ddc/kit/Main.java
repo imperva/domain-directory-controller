@@ -314,7 +314,7 @@ public class Main {
                 addField(new Field(FieldType.OBJECT_CLASS,"top")).
                 addField(new Field(FieldType.OBJECT_CLASS,"person")).
                 addField(new Field(FieldType.OBJECT_CLASS,"user")).
-                addField(new Field("cn","CR7")).
+                addField(new Field("cn","<last name>")).
                 /* NOTE: The CN MUST BE IDENTICAL TO THE CN SPECIFIED IN YOUR DN
                         If your DN is: 'CN=Gabi,OU=Users', then the CN should be 'Gabi'
                 */
