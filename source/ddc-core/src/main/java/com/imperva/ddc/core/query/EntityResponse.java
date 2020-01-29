@@ -81,6 +81,20 @@ public class EntityResponse implements Map.Entry {
         return null;
     }
 
+    /**
+     * Iterates over the returned values and searches the one with the matching field name
+     * @param name
+     * @return The correspondent field {@link Field}
+     */
+    public Field find(String name){
+        for(Field field :value){
+            if(field.getName().equals(name)) {
+                return field;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString(){
         return key;
