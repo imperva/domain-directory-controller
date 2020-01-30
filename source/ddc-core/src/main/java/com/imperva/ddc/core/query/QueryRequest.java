@@ -21,6 +21,7 @@ public class QueryRequest extends Request {
     private int pageChunkSize;
     private String searchSentenceText;
     private List<Endpoint> endpoints = new ArrayList<Endpoint>();
+    private List<SortKey> sortKeys = new ArrayList<>();
 
     /**
      * @return Used in Paged scenarios, specify the max chunk size of each roundtrip
@@ -309,4 +310,23 @@ public class QueryRequest extends Request {
             });
         }
     }
+
+    /**
+     * @return Get the sort keys (attributes) to sort the result on
+     */
+	public List<SortKey> getSortKeys() {
+		return sortKeys;
+	}
+
+	public SortKey addSortKey(FieldType fieldType) {
+		SortKey sortKey = new SortKey(fieldType);
+		sortKeys.add(sortKey);
+		return sortKey;
+	}
+ 
+	public SortKey addSortKey(String name) {
+		SortKey sortKey = new SortKey(name);
+		sortKeys.add(sortKey);
+		return sortKey;
+	}
 }

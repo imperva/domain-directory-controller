@@ -115,5 +115,6 @@ public abstract class SearchCriteriaBuilder extends RequestBuilder{
 
 
     public abstract void translateFields();
+    public abstract void translateSortKeys();
     public abstract SearchCriteria get();
 }

@@ -4,52 +4,22 @@ package com.imperva.ddc.core.query;
  * Created by gabi.beyo on 18/06/2015.
  * Represent a data-field
  */
-public class Field {
+public class Field extends FieldInfo {
 
-    private String name;
     private Object value;
-    private FieldType type;
-
-    public Field(){
-
+ 
+    public Field() {
+    	super();
     }
 
     public  Field(FieldType fieldType, Object fieldValue){
-        this.type = fieldType;
+        super(fieldType);
         this.value = fieldValue;
     }
 
     public  Field(String fieldName, Object fieldValue){
-        this.name = fieldName;
+        super(fieldName);
         this.value = fieldValue;
-    }
-
-    /**
-     * @return the real concrete Dyrectory implementation field name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the real concrete Directory implementation field name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return type A {@link FieldType} which specifies the common friendly field type
-     */
-    public FieldType getType() {
-        return type;
-    }
-
-    /**
-     * @param type A {@link FieldType} which specifies the common friendly field type
-     */
-    public void setType(FieldType type) {
-        this.type = type;
     }
 
     /**
