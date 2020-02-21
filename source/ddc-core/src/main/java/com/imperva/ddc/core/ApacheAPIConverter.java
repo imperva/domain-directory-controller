@@ -64,7 +64,7 @@ class ApacheAPIConverter {
             entResponse.setKey(ent.getDn().getName());
             for (Attribute att : ent.getAttributes()) {
                 for (Field field : requestedFields) {
-                    if (field.getName().equalsIgnoreCase(att.getId())) {
+                    if (field.getName().equals("*") || field.getName().equalsIgnoreCase(att.getId())) {
                         att.iterator().forEachRemaining(value -> {
                             entResponse.addValue(value.getValue(), att.getId(), field.getType());
                         });
