@@ -1,6 +1,8 @@
 package com.imperva.ddc.core.language.searchcriteria;
 
 import com.imperva.ddc.core.query.Field;
+import com.imperva.ddc.core.query.FieldInfo;
+import com.imperva.ddc.core.query.SortKey;
 
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.List;
 public class ActiveDirectorySearchCriteriaBuilderImpl extends SearchCriteriaBuilder {
 
     private List<Field> translatedRequestedFields;
+    private List<SortKey> translatedRequestedSortKeys;
     private String searchFilter;
 
     @Override
@@ -22,6 +25,15 @@ public class ActiveDirectorySearchCriteriaBuilderImpl extends SearchCriteriaBuil
             translateField(field);
         }
         translatedRequestedFields = fields;
+    }
+
+    @Override
+    public void translateSortKeys() {
+        List<SortKey> sortKeys = getQueryRequest().getSortKeys();
+        for (SortKey sortKey : sortKeys) {
+        	translateField(sortKey);
+        }
+        translatedRequestedSortKeys = sortKeys;
     }
 
     @Override
@@ -36,7 +48,7 @@ public class ActiveDirectorySearchCriteriaBuilderImpl extends SearchCriteriaBuil
     }
 
     @Override
-    public String translateField(Field field) {
+    public String translateField(FieldInfo field) {
         if (field.getType() == null) {
             return field.getName();
         }
@@ -65,6 +77,7 @@ public class ActiveDirectorySearchCriteriaBuilderImpl extends SearchCriteriaBuil
         SearchCriteria searchCriteria = new SearchCriteria();
         searchCriteria.setSearchFilter(this.searchFilter);
         searchCriteria.setRequestedFields(this.translatedRequestedFields);
+        searchCriteria.setRequestedSortKeys(this.translatedRequestedSortKeys);
         return searchCriteria;
     }
 

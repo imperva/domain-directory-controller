@@ -8,11 +8,14 @@ import org.apache.directory.api.ldap.model.message.SearchRequestImpl;
 import org.apache.directory.api.ldap.model.message.SearchScope;
 import org.apache.directory.api.ldap.model.message.controls.PagedResults;
 import org.apache.directory.api.ldap.model.message.controls.PagedResultsImpl;
+import org.apache.directory.api.ldap.model.message.controls.SortRequest;
+import org.apache.directory.api.ldap.model.message.controls.SortRequestControlImpl;
 import org.apache.directory.api.ldap.model.name.Dn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by gabi.beyo on 02/07/2015.
@@ -94,7 +97,7 @@ class ApacheAPIConverter {
         if (searchText != null && !searchText.trim().isEmpty())
             search.setFilter(searchText);
 
-
+        applySort(queryRequest, search);
         return search;
     }
 
@@ -109,5 +112,15 @@ class ApacheAPIConverter {
             search.addControl(pagedSearchControl);
         }
         return search;
+    }
+
+    void applySort(QueryRequest queryRequest, SearchRequest searchRequest) {
+    	if (!Objects.isNull(queryRequest.getSortKeys()) && !queryRequest.getSortKeys().isEmpty()) {
+    		SortRequest sortRequest = new SortRequestControlImpl();
+    		for(SortKey sortKey : queryRequest.getSortKeys()) {
+        	    sortRequest.addSortKey(new org.apache.directory.api.ldap.model.message.controls.SortKey(sortKey.getName(), sortKey.getMatchingRuleId(), sortKey.isReverseOrder()));    			
+    		}
+    		searchRequest.addControl(sortRequest);
+    	}
     }
 }

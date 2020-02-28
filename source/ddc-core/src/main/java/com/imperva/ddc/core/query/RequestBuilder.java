@@ -7,7 +7,7 @@ public abstract class RequestBuilder {
 
   //  private static final Logger LOGGER = LoggerFactory.getLogger(SearchCriteriaBuilder.class.getName());
 
-    protected String translateField(Field field) {
+    protected String translateField(FieldInfo field) {
         if (field.getType() == null) {
             return field.getName();
         }
