@@ -11,5 +11,8 @@ public enum PhraseOperator {
     SMALLERTHAN,
     GREATERTHANOREQUAL,
     SMALLERTHANOREQUAL,
-    CONTAINS
+    CONTAINS,
+    STARTSWITH,
+    ENDSWITH
+    
 }
