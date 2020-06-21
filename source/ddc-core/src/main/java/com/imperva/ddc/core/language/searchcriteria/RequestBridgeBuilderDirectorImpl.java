@@ -15,6 +15,7 @@ public class RequestBridgeBuilderDirectorImpl extends RequestBridgeBuilderDirect
         this.searchCriteriaBuilder.setQueryRequest(queryRequest);
         this.searchCriteriaBuilder.translateFields();
         this.searchCriteriaBuilder.translateFilter();
+        this.searchCriteriaBuilder.translateSortKeys();
     }
 
     @Override

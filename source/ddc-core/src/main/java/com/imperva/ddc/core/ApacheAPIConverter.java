@@ -1,5 +1,6 @@
 package com.imperva.ddc.core;
 
+import com.imperva.ddc.core.exceptions.ProtocolException;
 import com.imperva.ddc.core.query.*;
 import org.apache.directory.api.ldap.model.entry.*;
 import org.apache.directory.api.ldap.model.exception.LdapException;
@@ -38,14 +39,14 @@ class ApacheAPIConverter {
         return result;
     }
 
-    public Modification toModification(ModificationDetails modificationDetails){
+    public Modification toModification(ModificationDetails modificationDetails) {
         final String value = null == modificationDetails.getValue()
                 ? null
                 : modificationDetails.getValue().toString();
-        Operation operation= modificationDetails.getOperation();
-        String strAttribute= modificationDetails.getAttribute().getName();
+        Operation operation = modificationDetails.getOperation();
+        String strAttribute = modificationDetails.getAttribute().getName();
 
-        switch (operation){
+        switch (operation) {
             case ADD:
                 return new DefaultModification(ModificationOperation.ADD_ATTRIBUTE, strAttribute, value);
             case REMOVE:
@@ -97,7 +98,11 @@ class ApacheAPIConverter {
         if (searchText != null && !searchText.trim().isEmpty())
             search.setFilter(searchText);
 
-        applySort(queryRequest, search);
+        List<SortKey> sortKeys = queryRequest.getSortKeys();
+        if (!Objects.isNull(sortKeys) && !sortKeys.isEmpty()) {
+            SortRequestControlImpl sortRequest = applySort(sortKeys);
+            search.addControl(sortRequest);
+        }
         return search;
     }
 
@@ -114,13 +119,27 @@ class ApacheAPIConverter {
         return search;
     }
 
-    void applySort(QueryRequest queryRequest, SearchRequest searchRequest) {
-    	if (!Objects.isNull(queryRequest.getSortKeys()) && !queryRequest.getSortKeys().isEmpty()) {
-    		SortRequest sortRequest = new SortRequestControlImpl();
-    		for(SortKey sortKey : queryRequest.getSortKeys()) {
-        	    sortRequest.addSortKey(new org.apache.directory.api.ldap.model.message.controls.SortKey(sortKey.getName(), sortKey.getMatchingRuleId(), sortKey.isReverseOrder()));    			
-    		}
-    		searchRequest.addControl(sortRequest);
-    	}
+//    void applySort(QueryRequest queryRequest, SearchRequest searchRequest) {
+//        if (!Objects.isNull(queryRequest.getSortKeys()) && !queryRequest.getSortKeys().isEmpty()) {
+//            SortRequest sortRequest = new SortRequestControlImpl();
+//            for (SortKey sortKey : queryRequest.getSortKeys()) {
+//                sortRequest.addSortKey(new org.apache.directory.api.ldap.model.message.controls.SortKey(sortKey.getName(), sortKey.getMatchingRuleId(), sortKey.isReverseOrder()));
+//            }
+//            searchRequest.addControl(sortRequest);
+//        }
+//    }
+
+
+    SortRequestControlImpl applySort(List<SortKey> sortKeys) {
+        if (Objects.isNull(sortKeys) && sortKeys.isEmpty()) {
+            throw new ProtocolException("Sorting keys can't be empty");
+        }
+        SortRequestControlImpl sortRequest = new SortRequestControlImpl();
+        sortRequest.setCritical(false);
+
+        for (SortKey sortKey : sortKeys) {
+            sortRequest.addSortKey(new org.apache.directory.api.ldap.model.message.controls.SortKey(sortKey.getName(), sortKey.getMatchingRuleId(), sortKey.isReverseOrder()));
+        }
+        return sortRequest;
     }
 }

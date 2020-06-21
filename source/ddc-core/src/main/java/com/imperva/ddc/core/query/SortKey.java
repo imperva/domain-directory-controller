@@ -1,11 +1,13 @@
 package com.imperva.ddc.core.query;
 
+import org.apache.directory.api.ldap.model.constants.SchemaConstants;
+
 public class SortKey extends FieldInfo {
 
     /**
      * The matching rule to use to order the result
      */
-    private String matchingRuleId;
+    private String matchingRuleId = SchemaConstants.NUMERIC_STRING_ORDERING_MATCH_MR_OID;
 
     /**
      * A flag to set to true to get the result in reverse order. Default to false
