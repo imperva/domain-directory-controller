@@ -71,6 +71,7 @@ public abstract class SearchCriteriaBuilder extends RequestBuilder{
         String translatedPhraseTemplate = "(%s%s%s)";
         String translatedPhraseTemplate2 = "(%s%s%s%s%s)";
         String translatedPhraseTemplate3 = "(%s%s%s%s%s)";
+        String translatedPhraseTemplate4 = "(%s%s%s%s)";
         String attr = translateField(phrase.getAttribute());
         String value = phrase.getValue();
         switch (phrase.getPhraseOperator()) {
@@ -94,6 +95,12 @@ public abstract class SearchCriteriaBuilder extends RequestBuilder{
                 break;
             case CONTAINS:
                 result += String.format(translatedPhraseTemplate3, attr, "=","*", value, "*");
+                break;
+            case STARTSWITH:
+                result += String.format(translatedPhraseTemplate4, attr, "=", value, "*");
+                break;
+            case ENDSWITH:
+                result += String.format(translatedPhraseTemplate4, attr, "=","*", value);
                 break;
             default:
                 result += "";
