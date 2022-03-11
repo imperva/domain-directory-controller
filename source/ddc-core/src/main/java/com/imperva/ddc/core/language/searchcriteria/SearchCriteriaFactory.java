@@ -1,7 +1,7 @@
 package com.imperva.ddc.core.language.searchcriteria;
 
 import com.imperva.ddc.core.query.DirectoryType;
-import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang3.NotImplementedException;
 
 
 /**
@@ -16,7 +16,7 @@ public class SearchCriteriaFactory {
                 searchCriteriaBuilder = new ActiveDirectorySearchCriteriaBuilderImpl();
                 break;
             default:
-                throw new NotImplementedException();
+                throw new NotImplementedException("Directory type not implemented");
         }
         return searchCriteriaBuilder;
     }

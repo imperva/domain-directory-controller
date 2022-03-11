@@ -3,7 +3,7 @@ package com.imperva.ddc.core;
 import com.imperva.ddc.core.commons.Utils;
 import com.imperva.ddc.core.exceptions.*;
 import com.imperva.ddc.core.query.*;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.directory.api.ldap.model.exception.LdapAuthenticationException;
 import org.apache.directory.api.ldap.model.exception.LdapException;
 import org.apache.directory.api.ldap.model.exception.LdapProtocolErrorException;

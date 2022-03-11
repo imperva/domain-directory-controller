@@ -1,6 +1,6 @@
 package com.imperva.ddc.core.query;
 
-import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang3.NotImplementedException;
 
 public class RemoveRequestBuilderFactory {
 
@@ -11,7 +11,7 @@ public class RemoveRequestBuilderFactory {
                 removeCriteriaBuilder = new RemoveCriteriaBuilder();
                 break;
             default:
-                throw new NotImplementedException();
+                throw new NotImplementedException("Directory type not implemented");
         }
         return removeCriteriaBuilder;
     }
