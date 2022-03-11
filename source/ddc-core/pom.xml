@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.imperva.ddc</groupId>
         <artifactId>domain-directory-controller</artifactId>
-        <version>7.4.0.0.0.0</version>
+        <version>7.4.1.0.0.0</version>
     </parent>
 
     <artifactId>ddc-core</artifactId>
@@ -15,7 +15,7 @@
         <dependency>
             <groupId>org.apache.directory.api</groupId>
             <artifactId>api-all</artifactId>
-            <version>1.0.0-RC2</version> <!-- Mina version: 2.0.16 -->
+            <version>2.1.0</version> <!-- Mina version: 2.1.3 -->
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>

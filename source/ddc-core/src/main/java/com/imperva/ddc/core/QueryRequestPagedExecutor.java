@@ -103,7 +103,10 @@ class QueryRequestPagedExecutor extends QueryRequestExecutor {
         if (resultCodeEnum == ResultCodeEnum.UNWILLING_TO_PERFORM || resultCodeEnum == ResultCodeEnum.UNAVAILABLE_CRITICAL_EXTENSION || pagedSearchControl == null) {
             throw new QueryFailedException("AD can't handle paging. pagedSearchControl null?: " + (pagedSearchControl == null) + ", result.getLdapResult().getResultCode(): " + result.getLdapResult().getResultCode().name());
         }
-        Object cookie = pagedSearchControl.getCookie();
+        byte[] cookie = pagedSearchControl.getCookie();
+        if (cookie != null && cookie.length == 0) {
+        	cookie = null;
+        }
         LOGGER.trace("Retrieving cookie. Cookie value: {}", cookie);
         return cookie;
     }

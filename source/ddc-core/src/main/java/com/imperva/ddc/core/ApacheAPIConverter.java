@@ -1,22 +1,34 @@
 package com.imperva.ddc.core;
 
-import com.imperva.ddc.core.exceptions.ProtocolException;
-import com.imperva.ddc.core.query.*;
-import org.apache.directory.api.ldap.model.entry.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import org.apache.directory.api.ldap.model.entry.Attribute;
+import org.apache.directory.api.ldap.model.entry.DefaultModification;
+import org.apache.directory.api.ldap.model.entry.Entry;
+import org.apache.directory.api.ldap.model.entry.Modification;
+import org.apache.directory.api.ldap.model.entry.ModificationOperation;
+import org.apache.directory.api.ldap.model.entry.Value;
 import org.apache.directory.api.ldap.model.exception.LdapException;
 import org.apache.directory.api.ldap.model.message.SearchRequest;
 import org.apache.directory.api.ldap.model.message.SearchRequestImpl;
 import org.apache.directory.api.ldap.model.message.SearchScope;
 import org.apache.directory.api.ldap.model.message.controls.PagedResults;
 import org.apache.directory.api.ldap.model.message.controls.PagedResultsImpl;
-import org.apache.directory.api.ldap.model.message.controls.SortRequest;
-import org.apache.directory.api.ldap.model.message.controls.SortRequestControlImpl;
+import org.apache.directory.api.ldap.model.message.controls.SortRequestImpl;
 import org.apache.directory.api.ldap.model.name.Dn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+
+import com.imperva.ddc.core.exceptions.ProtocolException;
+import com.imperva.ddc.core.query.EntityResponse;
+import com.imperva.ddc.core.query.Field;
+import com.imperva.ddc.core.query.ModificationDetails;
+import com.imperva.ddc.core.query.Operation;
+import com.imperva.ddc.core.query.QueryRequest;
+import com.imperva.ddc.core.query.ReferralsHandling;
+import com.imperva.ddc.core.query.SortKey;
 
 /**
  * Created by gabi.beyo on 02/07/2015.
@@ -40,25 +52,37 @@ class ApacheAPIConverter {
     }
 
     public Modification toModification(ModificationDetails modificationDetails) {
-        final String value = null == modificationDetails.getValue()
+        final Object value = null == modificationDetails.getValue()
                 ? null
-                : modificationDetails.getValue().toString();
+                : modificationDetails.getValue();
         Operation operation = modificationDetails.getOperation();
         String strAttribute = modificationDetails.getAttribute().getName();
 
         switch (operation) {
             case ADD:
-                return new DefaultModification(ModificationOperation.ADD_ATTRIBUTE, strAttribute, value);
+                return new DefaultModification(ModificationOperation.ADD_ATTRIBUTE, strAttribute, convertToValue(value));
             case REMOVE:
                 return null == value
                         ? new DefaultModification(ModificationOperation.REMOVE_ATTRIBUTE, strAttribute)
-                        : new DefaultModification(ModificationOperation.REMOVE_ATTRIBUTE, strAttribute, value);
+                        : new DefaultModification(ModificationOperation.REMOVE_ATTRIBUTE, strAttribute, convertToValue(value));
             case REPLACE:
-                return new DefaultModification(ModificationOperation.REPLACE_ATTRIBUTE, strAttribute, value);
+                return new DefaultModification(ModificationOperation.REPLACE_ATTRIBUTE, strAttribute, convertToValue(value));
             default:
                 return null;
         }
+    }
 
+    Value convertToValue(Object value) {
+    	if (value instanceof String) {
+    		return new Value((String) value);
+    	}
+    	if (value instanceof Number) {
+    		return new Value(value.toString());
+    	}
+    	if (value instanceof byte[]) {
+    		return new Value((byte[]) value);
+    	}
+    	return null;
     }
 
     List<EntityResponse> toEntityResponse(List<Entry> entries, List<Field> requestedFields) {
@@ -70,7 +94,7 @@ class ApacheAPIConverter {
                 for (Field field : requestedFields) {
                     if (field.getName().equals("*") || field.getName().equalsIgnoreCase(att.getId())) {
                         att.iterator().forEachRemaining(value -> {
-                            entResponse.addValue(value.getValue(), att.getId(), field.getType());
+                            entResponse.addValue(value, att.getId(), field.getType());
                         });
                     }
                 }
@@ -100,7 +124,7 @@ class ApacheAPIConverter {
 
         List<SortKey> sortKeys = queryRequest.getSortKeys();
         if (!Objects.isNull(sortKeys) && !sortKeys.isEmpty()) {
-            SortRequestControlImpl sortRequest = applySort(sortKeys);
+            SortRequestImpl sortRequest = applySort(sortKeys);
             search.addControl(sortRequest);
         }
         return search;
@@ -130,11 +154,11 @@ class ApacheAPIConverter {
 //    }
 
 
-    SortRequestControlImpl applySort(List<SortKey> sortKeys) {
+    SortRequestImpl applySort(List<SortKey> sortKeys) {
         if (Objects.isNull(sortKeys) && sortKeys.isEmpty()) {
             throw new ProtocolException("Sorting keys can't be empty");
         }
-        SortRequestControlImpl sortRequest = new SortRequestControlImpl();
+        SortRequestImpl sortRequest = new SortRequestImpl();
         sortRequest.setCritical(false);
 
         for (SortKey sortKey : sortKeys) {
