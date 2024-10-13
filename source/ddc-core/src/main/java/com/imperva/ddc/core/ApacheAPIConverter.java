@@ -2,6 +2,7 @@ package com.imperva.ddc.core;
 
 import com.imperva.ddc.core.exceptions.ProtocolException;
 import com.imperva.ddc.core.query.*;
+import com.imperva.ddc.core.query.SortKey;
 import org.apache.directory.api.ldap.model.entry.*;
 import org.apache.directory.api.ldap.model.exception.LdapException;
 import org.apache.directory.api.ldap.model.message.SearchRequest;
@@ -9,8 +10,7 @@ import org.apache.directory.api.ldap.model.message.SearchRequestImpl;
 import org.apache.directory.api.ldap.model.message.SearchScope;
 import org.apache.directory.api.ldap.model.message.controls.PagedResults;
 import org.apache.directory.api.ldap.model.message.controls.PagedResultsImpl;
-import org.apache.directory.api.ldap.model.message.controls.SortRequest;
-import org.apache.directory.api.ldap.model.message.controls.SortRequestControlImpl;
+import org.apache.directory.api.ldap.model.message.controls.SortRequestImpl;
 import org.apache.directory.api.ldap.model.name.Dn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +70,7 @@ class ApacheAPIConverter {
                 for (Field field : requestedFields) {
                     if (field.getName().equals("*") || field.getName().equalsIgnoreCase(att.getId())) {
                         att.iterator().forEachRemaining(value -> {
-                            entResponse.addValue(value.getValue(), att.getId(), field.getType());
+                            entResponse.addValue(value.getString(), att.getId(), field.getType());
                         });
                     }
                 }
@@ -100,7 +100,7 @@ class ApacheAPIConverter {
 
         List<SortKey> sortKeys = queryRequest.getSortKeys();
         if (!Objects.isNull(sortKeys) && !sortKeys.isEmpty()) {
-            SortRequestControlImpl sortRequest = applySort(sortKeys);
+            SortRequestImpl sortRequest = applySort(sortKeys);
             search.addControl(sortRequest);
         }
         return search;
@@ -130,11 +130,12 @@ class ApacheAPIConverter {
 //    }
 
 
-    SortRequestControlImpl applySort(List<SortKey> sortKeys) {
+    SortRequestImpl applySort(List<SortKey> sortKeys) {
         if (Objects.isNull(sortKeys) && sortKeys.isEmpty()) {
             throw new ProtocolException("Sorting keys can't be empty");
         }
-        SortRequestControlImpl sortRequest = new SortRequestControlImpl();
+
+        SortRequestImpl sortRequest = new SortRequestImpl();
         sortRequest.setCritical(false);
 
         for (SortKey sortKey : sortKeys) {
