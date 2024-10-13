@@ -1,6 +1,7 @@
 package com.imperva.ddc.core.query;
 
-import org.apache.commons.lang.NotImplementedException;
+
+import org.apache.commons.lang3.NotImplementedException;
 
 public class AddRequestBuilderFactory {
 
@@ -11,7 +12,7 @@ public class AddRequestBuilderFactory {
                 addCriteriaBuilder = new AddCriteriaBuilder();
                 break;
             default:
-                throw new NotImplementedException();
+                throw new NotImplementedException("Not implemented yet");
         }
         return addCriteriaBuilder;
     }

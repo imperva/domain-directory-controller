@@ -14,11 +14,10 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by gabi.beyo on 06/07/2015.
