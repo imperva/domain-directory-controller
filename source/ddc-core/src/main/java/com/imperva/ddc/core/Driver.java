@@ -18,9 +18,13 @@ import org.apache.directory.ldap.client.api.LdapNetworkConnection;
 import org.apache.directory.ldap.client.api.exception.InvalidConnectionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLEngine;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +34,8 @@ import java.util.Map;
  */
 class Driver extends DriverBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(Driver.class.getName());
+    private static final String[] FALLBACK_TLS_PROTOCOLS = new String[]{"TLSv1.2", "TLSv1.3"};
+    private static final String[] JVM_TLS_PROTOCOLS = resolveJvmTlsProtocols();
 
     @Override
     LdapConnectionResult connect(Endpoint endpoint) {
@@ -210,6 +216,7 @@ class Driver extends DriverBase {
         ldapConnectionConfig.setUseSsl(isSecuredConnection);
         ldapConnectionConfig.setLdapHost(host);
         ldapConnectionConfig.setLdapPort(port);
+        ldapConnectionConfig.setEnabledProtocols(JVM_TLS_PROTOCOLS.clone());
         Boolean ignoreChainException = isIgnoreSSLValidations == null ? Boolean.parseBoolean(DDCProperties.getInstance().getProperty("ignore.ssl.cert.chain.exception")) : isIgnoreSSLValidations;
         if (isSecuredConnection && ignoreChainException) {
             TrustManager[] trustAllCerts = new TrustManager[]{
@@ -230,5 +237,24 @@ class Driver extends DriverBase {
             ldapConnectionConfig.setTrustManagers(trustAllCerts);
         }
         return new LdapNetworkConnection(ldapConnectionConfig);
+    }
+
+    /**
+     * Resolves the TLS protocols enabled by the JVM for client connections.
+     * This honors the runtime's TLS configuration and allows supported protocol
+     * versions, including TLS 1.3, to be used without maintaining a fixed list.
+     * Falls back to TLS 1.2 and TLS 1.3 if the JVM defaults cannot be resolved.
+     */
+    private static String[] resolveJvmTlsProtocols() {
+        try {
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, null, null);
+            SSLEngine sslEngine = sslContext.createSSLEngine();
+            sslEngine.setUseClientMode(true);
+            return sslEngine.getEnabledProtocols();
+        } catch (GeneralSecurityException | RuntimeException e) {
+            LOGGER.warn("Could not read the JVM default TLS protocols, falling back to {}", Arrays.toString(FALLBACK_TLS_PROTOCOLS), e);
+            return FALLBACK_TLS_PROTOCOLS.clone();
+        }
     }
 }
